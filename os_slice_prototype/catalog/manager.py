@@ -180,6 +180,7 @@ class ModelCatalogManager:
         model_folder_name = f"models--{model_id.replace('/', '--')}"
         model_dir = Path(hf_cache_home) / model_folder_name
         
+        # Check if directory exists and has snapshot/blobs
         if model_dir.exists():
             snapshots_dir = model_dir / "snapshots"
             if snapshots_dir.exists() and any(snapshots_dir.iterdir()):
@@ -189,6 +190,103 @@ class ModelCatalogManager:
     @staticmethod
     def get_model_cache_status() -> Dict[str, bool]:
         return {m["id"]: ModelCatalogManager.is_model_cached(m["id"]) for m in SUPPORTED_MODELS}
+
+    @staticmethod
+    def get_local_model_path(model_id: str) -> Optional[Path]:
+        """Returns the local snapshot path for a cached HuggingFace model if present."""
+        hf_cache_home = os.environ.get("HF_HOME")
+        if not hf_cache_home:
+            hf_cache_home = Path.home() / ".cache" / "huggingface" / "hub"
+        else:
+            hf_cache_home = Path(hf_cache_home) / "hub"
+
+        model_folder_name = f"models--{model_id.replace('/', '--')}"
+        model_dir = Path(hf_cache_home) / model_folder_name
+        
+        if model_dir.exists():
+            snapshots_dir = model_dir / "snapshots"
+            if snapshots_dir.exists():
+                snapshots = list(snapshots_dir.iterdir())
+                if snapshots:
+                    return snapshots[0]
+        return None
+
+    @staticmethod
+    def download_model_weights(model_id: str, token: Optional[str] = None) -> Path:
+        """Downloads the full model repository from HuggingFace Hub to local cache."""
+        try:
+            from huggingface_hub import snapshot_download
+        except ImportError:
+            raise RuntimeError("huggingface_hub is required to download models. Run 'pip install huggingface-hub'")
+
+        path = snapshot_download(
+            repo_id=model_id,
+            token=token or os.environ.get("HF_TOKEN"),
+            resume_download=True,
+        )
+        return Path(path)
+
+    @staticmethod
+    def get_system_hardware_profile() -> Dict[str, Any]:
+        """Returns available system CPU, RAM, and GPU/MPS devices."""
+        import torch
+        import psutil
+
+        ram_total_gb = round(psutil.virtual_memory().total / (1024 ** 3), 1)
+        ram_avail_gb = round(psutil.virtual_memory().available / (1024 ** 3), 1)
+
+        has_cuda = torch.cuda.is_available()
+        cuda_device_name = torch.cuda.get_device_name(0) if has_cuda else None
+        vram_total_gb = round(torch.cuda.get_device_properties(0).total_memory / (1024 ** 3), 1) if has_cuda else 0.0
+
+        has_mps = hasattr(torch.backends, "mps") and torch.backends.mps.is_available()
+
+        preferred_device = "cuda" if has_cuda else ("mps" if has_mps else "cpu")
+
+        return {
+            "ram_total_gb": ram_total_gb,
+            "ram_avail_gb": ram_avail_gb,
+            "has_cuda": has_cuda,
+            "cuda_device_name": cuda_device_name,
+            "vram_total_gb": vram_total_gb,
+            "has_mps": has_mps,
+            "preferred_device": preferred_device,
+        }
+
+    @staticmethod
+    def check_model_feasibility(model_id: str) -> Dict[str, Any]:
+        """Audits hardware feasibility for running or slicing the given model."""
+        hw = ModelCatalogManager.get_system_hardware_profile()
+        model = ModelCatalogManager.get_model_by_id(model_id)
+        if not model:
+            return {"feasible": False, "reason": f"Model {model_id} not found in catalog"}
+
+        param_count = model.get("param_count", 0)
+        fp16_req_gb = (param_count * 2) / (1024 ** 3)
+        int4_req_gb = (param_count * 0.5) / (1024 ** 3)
+
+        # Check VRAM or RAM
+        if hw["has_cuda"]:
+            fits_vram_fp16 = hw["vram_total_gb"] >= fp16_req_gb
+            fits_vram_int4 = hw["vram_total_gb"] >= int4_req_gb
+        else:
+            fits_vram_fp16 = False
+            fits_vram_int4 = False
+
+        fits_ram_fp16 = hw["ram_avail_gb"] >= fp16_req_gb
+        fits_ram_int4 = hw["ram_avail_gb"] >= int4_req_gb
+
+        return {
+            "model_id": model_id,
+            "name": model["name"],
+            "fp16_req_gb": round(fp16_req_gb, 1),
+            "int4_req_gb": round(int4_req_gb, 1),
+            "fits_vram_fp16": fits_vram_fp16,
+            "fits_vram_int4": fits_vram_int4,
+            "fits_ram_fp16": fits_ram_fp16,
+            "fits_ram_int4": fits_ram_int4,
+            "hardware": hw,
+        }
 
     @staticmethod
     def calculate_slicing_projections(model_id: str, slicing_ratio: float) -> Dict[str, Any]:
@@ -201,6 +299,7 @@ class ModelCatalogManager:
         excised_params = total_params * slicing_ratio
         active_params = total_params - excised_params
 
+        # FP16 memory: 2 bytes per parameter
         orig_fp16_gb = (total_params * 2) / (1024 ** 3)
         sliced_fp16_gb = (active_params * 2) / (1024 ** 3)
         saved_gb = orig_fp16_gb - sliced_fp16_gb

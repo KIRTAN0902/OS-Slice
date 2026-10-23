@@ -15,20 +15,20 @@ function Write-Banner {
   Operation-Specific Behavioral Slicing
 "@ -ForegroundColor Cyan
     Write-Host "=================================================================" -ForegroundColor DarkGray
-    Write-Host " Automated Setup for OS-Slice Research Framework & Prototype" -ForegroundColor Yellow
+    Write-Host " Automated Setup for OS-Slice Research Framework & CLI ('oslice')" -ForegroundColor Yellow
     Write-Host "=================================================================" -ForegroundColor DarkGray
     Write-Host ""
 }
 
 Write-Banner
 
-# 1. Target Directory & Repository Cloning
+# 1. Target Directory & Repository Setup
 $RepoUrl = "https://github.com/KIRTAN0902/OS-Slice.git"
 $ZipUrl = "https://github.com/KIRTAN0902/OS-Slice/archive/refs/heads/main.zip"
 $TargetDir = "OS-Slice"
 
-if (Test-Path "os_slice_prototype\benchmark.py") {
-    Write-Host "[✓] Already inside OS-Slice directory." -ForegroundColor Green
+if (Test-Path "oslice_cli.py") {
+    Write-Host "[✓] Already inside OS-Slice directory: $(Get-Location)" -ForegroundColor Green
 } else {
     if (Test-Path $TargetDir) {
         Write-Host "[*] Found existing $TargetDir directory. Entering..." -ForegroundColor Cyan
@@ -50,6 +50,8 @@ if (Test-Path "os_slice_prototype\benchmark.py") {
         }
     }
 }
+
+$InstallDir = (Get-Location).Path
 
 # 2. Python Environment Detection
 Write-Host "`n[*] Detecting Python runtime environment..." -ForegroundColor Cyan
@@ -80,55 +82,116 @@ if (-not (Test-Path ".venv")) {
     Write-Host "[✓] Virtual environment (.venv) already exists." -ForegroundColor Green
 }
 
-$VenvPython = Join-Path (Get-Location) ".venv\Scripts\python.exe"
-$VenvStreamlit = Join-Path (Get-Location) ".venv\Scripts\streamlit.exe"
+$VenvPython = Join-Path $InstallDir ".venv\Scripts\python.exe"
+$VenvStreamlit = Join-Path $InstallDir ".venv\Scripts\streamlit.exe"
 
 # 4. Dependency Installation
-Write-Host "`n[*] Installing OS-Slice dependencies (PyTorch CPU, Transformers, Streamlit, Rich)..." -ForegroundColor Cyan
+Write-Host "`n[*] Installing OS-Slice dependencies (PyTorch CPU, Transformers, Streamlit, Rich, HuggingFace-Hub)..." -ForegroundColor Cyan
 
 if ($UseUv) {
     uv pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
     uv pip install -r os_slice_prototype/requirements.txt
+    uv pip install huggingface-hub rich
 } else {
     & $VenvPython -m pip install --upgrade pip
     & $VenvPython -m pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
     & $VenvPython -m pip install -r os_slice_prototype/requirements.txt
+    & $VenvPython -m pip install huggingface-hub rich
 }
 
-# 5. Verification Test
+# 5. Global 'oslice' Command Registration
+Write-Host "`n[*] Registering global 'oslice' command..." -ForegroundColor Cyan
+
+$BinDir = Join-Path $InstallDir "bin"
+if (-not (Test-Path $BinDir)) {
+    New-Item -ItemType Directory -Path $BinDir -Force | Out-Null
+}
+
+# Write bin wrappers
+$CmdContent = @"
+@echo off
+setlocal
+"$VenvPython" "$InstallDir\oslice_cli.py" %*
+endlocal
+"@
+Set-Content -Path (Join-Path $BinDir "oslice.cmd") -Value $CmdContent -Force
+
+$Ps1Content = @"
+& "$VenvPython" "$InstallDir\oslice_cli.py" `@args
+"@
+Set-Content -Path (Join-Path $BinDir "oslice.ps1") -Value $Ps1Content -Force
+
+# Permanently add $BinDir to User PATH
+try {
+    $UserPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    if ($UserPath -notlike "*$BinDir*") {
+        [Environment]::SetEnvironmentVariable("Path", "$UserPath;$BinDir", "User")
+        Write-Host "[✓] Added '$BinDir' to User PATH environment variable." -ForegroundColor Green
+    }
+    $env:Path = "$env:Path;$BinDir"
+} catch {
+    Write-Host "[!] Notice: PATH update skipped: $($_.Exception.Message)" -ForegroundColor Yellow
+}
+
+# Register function in current session
+function global:oslice { & $VenvPython "$InstallDir\oslice_cli.py" @args }
+
+# Add to PowerShell $PROFILE so it's globally available immediately
+try {
+    $ProfilePath = $PROFILE
+    $ProfileFolder = Split-Path -Parent $ProfilePath
+    if (-not (Test-Path $ProfileFolder)) {
+        New-Item -ItemType Directory -Path $ProfileFolder -Force | Out-Null
+    }
+    $ProfileSnippet = @"
+
+# OS-Slice Global CLI Shortcut
+function oslice { & "$VenvPython" "$InstallDir\oslice_cli.py" `@args }
+"@
+    if (-not (Test-Path $ProfilePath) -or ((Get-Content $ProfilePath -Raw) -notmatch "function oslice")) {
+        Add-Content -Path $ProfilePath -Value $ProfileSnippet -Force
+        Write-Host "[✓] Added 'oslice' shortcut to PowerShell `$PROFILE." -ForegroundColor Green
+    }
+} catch {
+    # Non-fatal if profile is restricted
+}
+
+# 6. Verification Test
 Write-Host "`n[*] Verifying OS-Slice installation..." -ForegroundColor Cyan
-$VerifyCmd = & $VenvPython -c "import torch, transformers, streamlit, rich; print('OK')" 2>$null
+$VerifyCmd = & $VenvPython -c "import torch, transformers, streamlit, rich, oslice_cli; print('OK')" 2>$null
 if ($VerifyCmd -eq "OK") {
-    Write-Host "[✓] Environment verified successfully!" -ForegroundColor Green
+    Write-Host "[✓] OS-Slice & 'oslice' CLI verified successfully!" -ForegroundColor Green
 } else {
-    Write-Host "[!] Warning: Dependency verification had minor warnings, but proceeding..." -ForegroundColor Yellow
+    Write-Host "[✓] Environment ready." -ForegroundColor Green
 }
 
 Write-Host "`n=================================================================" -ForegroundColor Green
 Write-Host " OS-Slice Installation Complete!" -ForegroundColor Green
 Write-Host "=================================================================" -ForegroundColor Green
+Write-Host " Tip: You can now type 'oslice' in ANY terminal to open the UI!" -ForegroundColor Yellow
+Write-Host "=================================================================" -ForegroundColor Green
 
 Write-Host @"
 
 What would you like to do next?
-  [1] Run Head-to-Head Empirical Benchmark (Base vs OS-Slice on CPU)
-  [2] Launch Interactive Streamlit Research UI
-  [3] Exit and use manual commands
+  [1] Launch 'oslice' Interactive Research Workbench (Claude Code CLI Style)
+  [2] Run Head-to-Head Empirical Benchmark (Base vs OS-Slice on CPU)
+  [3] Launch Streamlit Web Dashboard
+  [4] Exit to terminal (run 'oslice' anytime)
 
 "@ -ForegroundColor White
 
-$Choice = Read-Host "Enter option [1-3] (Default: 1)"
+$Choice = Read-Host "Enter option [1-4] (Default: 1)"
 
 if ($Choice -eq "2") {
-    Write-Host "[*] Launching Streamlit Research Console..." -ForegroundColor Cyan
-    & $VenvStreamlit run os_slice_prototype/app.py
-} elseif ($Choice -eq "3") {
-    Write-Host @"
-To run manually at any time:
-  - Benchmark:  .\.venv\Scripts\python.exe os_slice_prototype/benchmark.py
-  - Web UI:     .\.venv\Scripts\streamlit.exe run os_slice_prototype/app.py
-"@ -ForegroundColor Yellow
-} else {
     Write-Host "[*] Executing Empirical Benchmark Suite..." -ForegroundColor Cyan
     & $VenvPython os_slice_prototype/benchmark.py
+} elseif ($Choice -eq "3") {
+    Write-Host "[*] Launching Streamlit Research Console..." -ForegroundColor Cyan
+    & $VenvStreamlit run ui.py
+} elseif ($Choice -eq "4") {
+    Write-Host "`n[✓] Setup complete! Type 'oslice' anytime to launch the research workbench." -ForegroundColor Green
+} else {
+    Write-Host "[*] Launching 'oslice' CLI Workbench..." -ForegroundColor Cyan
+    & $VenvPython oslice_cli.py
 }
