@@ -1,0 +1,31 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Large model weight checkpoints (keep repo lightweight, download via HF hub)
+*.safetensors
+*.bin
+*.h5
+*.msgpack
+models--*
+
+# Build artifacts & temp
+build/
+dist/
+*.egg-info/
+*.tmp
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

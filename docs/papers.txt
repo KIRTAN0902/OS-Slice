@@ -1,0 +1,39 @@
+Pillar 1: Circuit Discovery & Mechanistic Slicing (Isolating Sub-networks)
+Towards Automated Circuit Discovery for Mechanistic Interpretability (Conmy et al., NeurIPS 2023)   
+
+Attribution-guided Pruning for Compression, Circuit Discovery, and Targeted Correction in LLMs (Yao et al., 2024)   
+
+Interpretability in the Wild: A Circuit for Indirect Object Identification in GPT-2 small (Wang et al., ICLR 2023)
+
+Locating and Editing Factual Associations in GPT (Meng et al., NeurIPS 2022)
+
+Pillar 2: Structured Pruning & Model Slicing (Removing Generalist Weights)
+LLM-Pruner: On the Structural Pruning of Large Language Models (Ma et al., NeurIPS 2023)   
+
+Sheared LLaMA: Accelerating Language Model Pre-training via Structured Pruning (Xia et al., ICLR 2024)   
+
+Wanda: A Simple and Effective Pruning Approach for Large Language Models (Sun et al., ICLR 2024)   
+
+SparseGPT: Massive Language Models Can Be Accurately Pruned in One-Shot (Frantar & Alistarh, ICML 2023)   
+
+The Unreasonable Ineffectiveness of the Deeper Layers (Gromov et al., 2024)
+
+Pillar 3: Knowledge Distillation & Training Small Language Models (1B–3B SLMs)
+Distilling Step-by-Step! Outperforming Larger Language Models with Less Training Data and Smaller Model Sizes (Hsieh et al., ACL 2023)   
+
+MiniLLM: Knowledge Distillation of Large Language Models (Gu et al., ICLR 2024)   
+
+TinyLlama: An Open-Source Small Language Model (Zhang et al., 2024)   
+
+SmolLM2: When Smol Goes Big — Data-Centric Training of a Small Language Model (Allal et al., 2024)   
+
+MobileLLM: Optimizing Sub-billion Parameter Language Models for On-Device Use Cases (Li et al., ICML 2024)   
+
+BabyLLaMA: Knowledge Distillation from Various Teachers (Timiryasov & Tastet, 2023)   
+
+Pillar 4: Enterprise Tool-Calling, Schema Compliance & Edge Evaluation
+Gorilla: Large Language Model Connected with Massive APIs (Patil et al., 2023)
+
+SynCode: LLM Generation with Grammar Augmentation (Ugare et al., 2024)
+
+BIRD: A Big Bench for Large-Scale Database Grounded Text-to-SQL Evaluation (Li et al., NeurIPS 2023)

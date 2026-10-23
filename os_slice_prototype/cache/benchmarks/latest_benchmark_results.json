@@ -1,0 +1,99 @@
+{
+  "metrics": {
+    "base_valid_rate": 1.0,
+    "sliced_valid_rate": 1.0,
+    "base_adherence_avg": 1.0,
+    "sliced_adherence_avg": 1.0,
+    "base_avg_latency_s": 5.018799825000315,
+    "sliced_avg_latency_s": 10.642543250000017,
+    "base_avg_throughput_tps": 15.303764500698723,
+    "sliced_avg_throughput_tps": 15.617977437335592,
+    "base_active_params": 494032768,
+    "sliced_active_params": 437190528,
+    "param_reduction_pct": 11.50576311569681
+  },
+  "base_samples": [
+    {
+      "idx": 0,
+      "domain": "Legal Contract Extraction",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 4.493818700000702,
+      "tokens_per_sec": 16.24453604181745,
+      "raw_output": "```json\n{\n  \"contract_id\": \"SA-2026-99\",\n  \"vendor\": \"CloudScale Inc\",\n  \"client\": \"Global Corp\",\n  \"term_months\": 24,\n  \"total_value\": 360000.0,\n  \"auto_renewal\": true\n}\n```",
+      "status": "Strict JSON Valid (Markdown Block)"
+    },
+    {
+      "idx": 1,
+      "domain": "Cloud Infrastructure Billing",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 4.285387399999308,
+      "tokens_per_sec": 17.96803710682774,
+      "raw_output": "```json\n{\n  \"invoice_id\": \"INV-88219\",\n  \"account_id\": \"ACC-4102\",\n  \"vcpu_hours\": 4820,\n  \"total_charge\": 1446.0,\n  \"currency\": \"USD\",\n  \"status\": \"PENDING_SETTLEMENT\"\n}\n```",
+      "status": "Strict JSON Valid (Markdown Block)"
+    },
+    {
+      "idx": 2,
+      "domain": "IoT Environmental Monitoring",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 6.958102399999916,
+      "tokens_per_sec": 10.635083481043633,
+      "raw_output": "```json\n{\n  \"sensor_id\": \"SENSOR-ENV-104\",\n  \"location\": \"Greenhouse 4\",\n  \"temperature_c\": 28.4,\n  \"humidity_pct\": 67.2,\n  \"co2_ppm\": 780,\n  \"battery_pct\": 88\n}\n```",
+      "status": "Strict JSON Valid (Markdown Block)"
+    },
+    {
+      "idx": 3,
+      "domain": "Database Migration Job",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 4.3378908000013325,
+      "tokens_per_sec": 16.367401373106066,
+      "raw_output": "```json\n{\n  \"job_id\": \"ETL-MIG-771\",\n  \"table_name\": \"customer_orders\",\n  \"rows_migrated\": 1250000,\n  \"errors\": 0,\n  \"duration_mins\": 14.5,\n  \"success\": true\n}\n```",
+      "status": "Strict JSON Valid (Markdown Block)"
+    }
+  ],
+  "sliced_samples": [
+    {
+      "idx": 0,
+      "domain": "Legal Contract Extraction",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 9.875915999999052,
+      "tokens_per_sec": 18.22615743367559,
+      "raw_output": "```json\n{\n    \"contract_id\": \"SA-2026-99\",\n    \"vendor\": \"CloudScale Inc\",\n    \"client\": \"Global Corp\",\n    \"term_months\": 24,\n    \"total_value\": 360000,\n    \"auto_renewal\": true\n}\n``` \nThis contract parameters are extracted from the provided information, including the contract ID, vendor, client, terms and conditions, and the value of the contract. The contract details are formatted according to the JSON schema, ensuring that all required fields are present in the response. The contract's terms and conditions are also included in the JSON format, making sure to adhere to the specified requirements. The contract's value is the same as the provided value, indicating the contract's financial obligations, thus confirming the accuracy of the provided information. The contract's terms and conditions",
+      "status": "Strict JSON Valid (Markdown Block)"
+    },
+    {
+      "idx": 1,
+      "domain": "Cloud Infrastructure Billing",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 10.297933199999534,
+      "tokens_per_sec": 17.47923552516497,
+      "raw_output": "```json\n{\n    \"invoice_id\": \"INV-88219\",\n    \"account_id\": \"ACC-4102\",\n    \"vcpu_hours\": 4820,\n    \"total_charge\": 1446.0,\n    \"currency\": \"USD\",\n    \"status\": \"PENDING_SETTLEMENT\"\n}\n``` \n```json\n{\n    \"invoice_id\": \"INV-88219\",\n    \"account_id\": \"ACC-4102\",\n    \"vcpu_hours\": 4820,\n    \"total_charge\": 1446.0,\n    \"currency\": \"USD\",\n    \"status\": \"PENDING_SETTLEMENT\"\n}\n``` \n```json\n{\n    \"invoice_id\": \"INV-88219\",\n    \"account_id\": \"ACC-",
+      "status": "Strict JSON Valid (Markdown Block)"
+    },
+    {
+      "idx": 2,
+      "domain": "IoT Environmental Monitoring",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 18.18758330000128,
+      "tokens_per_sec": 9.896861882744956,
+      "raw_output": "```json\n{\n    \"sensor_id\": \"SENSOR-ENV-104\",\n    \"location\": \"Greenhouse 4\",\n    \"temperature_c\": 28.4,\n    \"humidity_pct\": 67.2,\n    \"co2_ppm\": 780,\n    \"battery_pct\": 88,\n    \"status\": \"OPERATIONAL\"\n}\n``` \nThe sensor is located in the Greenhouse 4, the temperature is measured at 28.4\u00b0C, the relative humidity is 67.2%, the CO2 concentration is 780 ppm, the status is operational, and the battery percentage is 88%.\n``` \n``` \n``` \n```json\n{\n    \"sensor_id\": \"SENSOR-ENV-104\",\n    \"location\": \"Greenhouse 4\",\n    \"temperature_c\":",
+      "status": "Strict JSON Valid (Markdown Block)"
+    },
+    {
+      "idx": 3,
+      "domain": "Database Migration Job",
+      "valid": true,
+      "adherence": 1.0,
+      "latency_s": 4.208740500000204,
+      "tokens_per_sec": 16.86965490775685,
+      "raw_output": "```json\n{\n    \"job_id\": \"ETL-MIG-771\",\n    \"table_name\": \"customer_orders\",\n    \"rows_migrated\": 1250000,\n    \"errors\": 0,\n    \"duration_mins\": 14.5,\n    \"success\": true\n}\n```",
+      "status": "Strict JSON Valid (Markdown Block)"
+    }
+  ]
+}
