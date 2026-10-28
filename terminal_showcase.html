@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OS-Slice System Demonstration</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      padding: 30px 50px;
+      overflow-x: hidden;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-title {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge {
+      background: #047857;
+      color: #a7f3d0;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+    .terminal-container {
+      background: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .terminal-bar {
+      background: #111827;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #1f2937;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .bar-title { color: #64748b; font-size: 12px; margin-left: 12px; font-weight: 600; }
+    .terminal-body {
+      padding: 24px;
+      color: #f1f5f9;
+      white-space: pre;
+    }
+    .cyan { color: #38bdf8; }
+    .bold-cyan { color: #0284c7; font-weight: bold; }
+    .green { color: #34d399; font-weight: bold; }
+    .yellow { color: #fbbf24; font-weight: bold; }
+    .magenta { color: #f472b6; font-weight: bold; }
+    .dim { color: #64748b; }
+    .white { color: #f8fafc; font-weight: bold; }
+    .box { border: 1px solid #334155; border-radius: 8px; padding: 12px 18px; margin: 10px 0; background: #0b1120; }
+  </style>
+</head>
+<body>
+
+  <div class="header-card">
+    <div class="title-row">
+      <div>
+        <div class="main-title">⚡ OS-Slice: Operation-Specific Behavioral Slicing</div>
+        <div class="subtitle">Autonomous Parameter Isolation & Representation Engineering for Deterministic Operations</div>
+      </div>
+      <div class="badge">● v1.0.0 Ready | 100% Invariant Guarantee</div>
+    </div>
+  </div>
+
+  <div class="terminal-container">
+    <div class="terminal-bar">
+      <span class="dot dot-red"></span>
+      <span class="dot dot-yellow"></span>
+      <span class="dot dot-green"></span>
+      <span class="bar-title">PowerShell — oslice CLI (Claude Code Style TUI)</span>
+    </div>
+    <div class="terminal-body"><span class="cyan">   ___  ____       ____  _ _          </span>
+<span class="cyan">  / _ \/ ___|     / ___|| (_) ___ ___ </span>   <span class="white">OS-SLICE RESEARCH WORKBENCH</span>
+<span class="cyan"> | | | \___ \ ____\___ \| | |/ __/ _ \</span>   <span class="dim">Operation-Specific Behavioral Slicing</span>
+<span class="cyan"> | |_| |___) |_____|__) | | | (_|  __/</span>   <span class="yellow">v1.0.0</span> | <span class="green">100% Invariant Guarantee</span>
+<span class="cyan">  \___/|____/     |____/|_|_|\___\___/</span>
+
+<span class="green">●</span> <span class="dim">Engine:</span> <span class="white">Active</span> | <span class="dim">Device: CPU</span> | <span class="dim">RAM: 5.2G / 15.6G</span> | <span class="dim">Catalog:</span> <span class="cyan">11 Models (360M - 120B)</span> | <span class="dim">Breadcrumb:</span> <span class="yellow">Main Workbench</span>
+
+<div class="box"><span class="cyan">Available Modules:</span>
+  <span class="white">[1] 🏠 Pre-Sliced Models Hub</span>
+      <span class="dim">Browse models already OS-Sliced (Strict JSON, SQL, Tool Calling, PII).</span>
+  <span class="white">[2] 📚 Hugging Face Model Library (360M - 120B)</span>
+      <span class="dim">Catalog of foundational architectures. Audit hardware, download from HF Hub, or slice.</span>
+  <span class="white">[3] 📊 Empirical Benchmarks & Deep Analysis</span>
+      <span class="dim">Compare Normal vs Sliced models: Active Parameters (437M vs 494M), Saliency Audit, 100% Parseability.</span>
+  <span class="white">[4] ✂️  Create New OS-Slice (Slice Any Model)</span>
+      <span class="dim">Interactive 4-stage pipeline: Boundary Masking -> Fisher Profiling -> Slicing -> OBS Compensation.</span>
+  <span class="white">[5] ⚡ Operational Inference Playground</span>
+      <span class="dim">Test active sliced micro-models with live structured extraction prompts.</span>
+  <span class="white">[6] 🌐 Launch Web Dashboard (Streamlit)</span>
+      <span class="dim">Start the interactive browser GUI with VRAM reduction sliders and model cards.</span>
+</div>
+<span class="cyan">oslice</span> > 3
+
+<div class="box"><span class="yellow">📊 Head-to-Head Empirical Benchmark Scorecard (Base Generalist vs OS-Slice):</span>
+• <span class="white">Active Parameters:</span>    Base: 494.0M (100.0%)    -->  OS-Slice: <span class="green">437.2M (88.49%)</span>  <span class="magenta">[-56.8M excised bloat]</span>
+• <span class="white">Strict JSON Validity:</span> Base: 100.0% (4/4)       -->  OS-Slice: <span class="green">100.0% (4/4)</span>     <span class="green">[Zero syntax corruption]</span>
+• <span class="white">Key Adherence:</span>        Base: 100.0%             -->  OS-Slice: <span class="green">100.0%</span>           <span class="green">[100% field completeness]</span>
+• <span class="white">Throughput:</span>           Base: 15.30 tokens/sec   -->  OS-Slice: <span class="green">15.62 tokens/sec</span> <span class="green">[+2.05% speedup]</span>
+• <span class="white">Memory Footprint:</span>     Base: ~988 MB FP16       -->  OS-Slice: <span class="green">~874 MB FP16</span>     <span class="green">[-114 MB RAM freed]</span>
+</div>
+<span class="dim">Switching to Live Interactive Web Console on http://localhost:8501...</span></div>
+  </div>
+
+</body>
+</html>

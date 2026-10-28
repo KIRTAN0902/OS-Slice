@@ -5,12 +5,26 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Catalog](https://img.shields.io/badge/Catalog-360M%20to%20120B-brightgreen.svg)](#-foundational-hugging-face-model-library-up-to-120b)
 [![CLI](https://img.shields.io/badge/CLI-oslice-cyan.svg)](#-quick-launch-with-oslice)
+[![Video Demo](https://img.shields.io/badge/Demo-1080p%20Video-orange.svg)](#-ui-video-demonstration)
 
 > **Autonomous parameter isolation and structural compression for deterministic enterprise tasks.**
 
 OS-Slice addresses the **Over-Provisioning Pathology** in modern AI: deploying dense general-purpose models (8B–70B+ parameters) to perform narrow, deterministic operations (e.g., Structured JSON Schema Extraction, API Tool Calling, SQL Query Synthesis). Monolithic models waste >90% of memory bandwidth on non-functional factual recall while remaining susceptible to stochastic syntax drift.
 
 OS-Slice mathematically isolates, excises, and compiles the exact parameter manifolds responsible for target operational invariants, delivering **100% schema fidelity with native tensor core hardware acceleration**.
+
+---
+
+## 🎬 UI Video Demonstration
+
+A full high-definition (1080p) video walkthrough demonstrating the OS-Slice research interface:
+
+![OS-Slice UI Walkthrough Preview](OS_Slice_UI_Demonstration.gif)
+
+> **Download full video for presentations & mentor reviews:**  
+> 📹 [**Download OS_Slice_UI_Demonstration.mp4**](OS_Slice_UI_Demonstration.mp4) *(1080p HD, 3.2 MB, H.264)*
+
+---
 
 ---
 
