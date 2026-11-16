@@ -272,40 +272,26 @@ def run_benchmark(
 
 
 if __name__ == "__main__":
-    console.print("[bold cyan]Initializing OS-Slice Standalone Benchmark Pipeline...[/bold cyan]")
-    cfg = default_config
+    from research.experiment_manager import ExperimentManager
 
+    console.print("[bold cyan]Initializing OS-Slice Shared Experiment Benchmark Pipeline...[/bold cyan]")
+    cfg = default_config
     tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)
     base_model = AutoModelForCausalLM.from_pretrained(
         cfg.model_id,
         torch_dtype=cfg.dtype,
-        low_cpu_mem_usage=True
+        low_cpu_mem_usage=True,
     ).to(cfg.device)
 
-    # Load or compute calibration & profile
-    calib_ds = build_calibration_dataset(tokenizer, records=CALIBRATION_RECORDS, boundary_weight=cfg.boundary_token_weight)
-    
-    profiler = OperationalProfiler(base_model, cfg)
-    profile_path = cfg.profiles_dir / "operational_fisher_profile.pt"
-    if profile_path.exists():
-        profiler.load_profile(profile_path)
-    else:
-        profiler.profile(calib_ds, save_path=profile_path)
-
-    # Apply Slicing
-    slicer = StructuralSlicer(cfg)
-    sliced_model = slicer.apply_slicing(
-        base_model,
-        profiler.head_saliency,
-        profiler.mlp_saliency,
+    mgr = ExperimentManager()
+    res = mgr.run_full_experiment(
+        base_model=base_model,
+        tokenizer=tokenizer,
+        config=cfg,
         slicing_ratio=cfg.default_slicing_ratio,
-        in_place=False,
+        calibration_records=CALIBRATION_RECORDS,
+        eval_records=EVALUATION_RECORDS,
+        source_interface="cli",
+        label="CLI Benchmark Run",
     )
-
-    # Localized Compensation
-    compensator = OperationalCompensator(cfg)
-    compensator.compensate(sliced_model, calib_ds, steps=cfg.compensation_steps)
-
-    # Execute Benchmark
-    results = run_benchmark(base_model, sliced_model, tokenizer, eval_records=EVALUATION_RECORDS, config=cfg)
-    console.print("[bold green]Benchmark execution completed successfully![/bold green]")
+    console.print(f"[bold green]Experiment {res['manifest'].experiment_id} completed successfully![/bold green]")

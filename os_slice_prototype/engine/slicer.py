@@ -226,3 +226,63 @@ class StructuralSlicer:
             f"({sliced_model.effective_sparsity * 100:.1f}% reduction)"
         )
         return sliced_model
+
+    @staticmethod
+    def build_slicing_report(sliced_model: OSSliceModel, base_model: Optional[PreTrainedModel] = None) -> Dict[str, Any]:
+        """Builds an inspectable report of masks, protected layers, scaling, and reconciled parameter counts."""
+        layers = sliced_model._get_layers()
+        num_layers = len(layers)
+        num_heads = sliced_model.config.num_attention_heads
+        intermediate_size = sliced_model.config.intermediate_size
+        protected_indices = [0, 1, num_layers - 2, num_layers - 1] if num_layers >= 4 else list(range(num_layers))
+
+        actual_nonzero = sum(int((p.data != 0).sum().item()) for p in sliced_model.model.parameters())
+        actual_total = sum(p.numel() for p in sliced_model.model.parameters())
+        actual_zeroed = actual_total - actual_nonzero
+
+        layer_details = []
+        protected_verified = True
+        for l_idx in range(num_layers):
+            h_m = sliced_model.head_mask[l_idx]
+            m_m = sliced_model.mlp_mask[l_idx]
+            pruned_h = (h_m == 0).nonzero(as_tuple=True)[0].tolist()
+            retained_h = (h_m == 1).nonzero(as_tuple=True)[0].tolist()
+            pruned_m_count = int((m_m == 0).sum().item())
+            retained_m_count = int((m_m == 1).sum().item())
+            is_protected = l_idx in protected_indices
+            if is_protected and (len(pruned_h) > 0 or pruned_m_count > 0):
+                protected_verified = False
+
+            h_scale = (num_heads / len(retained_h)) ** 0.5 if (len(pruned_h) > 0 and len(retained_h) > 0) else 1.0
+            m_scale = (intermediate_size / retained_m_count) ** 0.5 if (pruned_m_count > 0 and retained_m_count > 0) else 1.0
+
+            layer_details.append({
+                "layer": l_idx,
+                "role": "protected_interface" if is_protected else "intermediate_sliced",
+                "total_heads": num_heads,
+                "retained_heads_count": len(retained_h),
+                "sliced_heads_count": len(pruned_h),
+                "sliced_head_indices": pruned_h,
+                "retained_head_indices": retained_h,
+                "head_variance_scale": round(h_scale, 6),
+                "total_mlp_channels": intermediate_size,
+                "retained_mlp_channels": retained_m_count,
+                "sliced_mlp_channels": pruned_m_count,
+                "mlp_variance_scale": round(m_scale, 6),
+            })
+
+        return {
+            "slicing_ratio": sliced_model.slicing_ratio,
+            "num_layers": num_layers,
+            "protected_layers": protected_indices,
+            "protected_layers_verified": protected_verified,
+            "total_params": sliced_model.total_params,
+            "active_params_structural": sliced_model.active_params,
+            "sliced_params_structural": sliced_model.sliced_params,
+            "effective_active_sparsity_pct": round(sliced_model.effective_sparsity * 100.0, 4),
+            "actual_tensor_total_params": actual_total,
+            "actual_tensor_nonzero_params": actual_nonzero,
+            "actual_tensor_zeroed_params": actual_zeroed,
+            "physical_tensor_dimensions_unchanged": True,
+            "layers": layer_details,
+        }

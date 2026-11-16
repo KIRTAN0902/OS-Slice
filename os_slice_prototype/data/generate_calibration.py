@@ -172,6 +172,110 @@ EVALUATION_RECORDS = [
             "duration_mins": 14.5,
             "success": True
         }
+    },
+    {
+        "domain": "Healthcare Laboratory Result",
+        "context": "Lab report LAB-2026-310 for patient PT-7742: Hemoglobin A1c measured at 6.4%, fasting glucose 118 mg/dL. Specimen collected at Central Diagnostics. Critical alert flag: false.",
+        "schema_instruction": "Extract lab result into JSON: {lab_id: str, patient_id: str, hba1c_pct: float, glucose_mg_dl: int, facility: str, critical_flag: bool}.",
+        "target_json": {
+            "lab_id": "LAB-2026-310",
+            "patient_id": "PT-7742",
+            "hba1c_pct": 6.4,
+            "glucose_mg_dl": 118,
+            "facility": "Central Diagnostics",
+            "critical_flag": False
+        }
+    },
+    {
+        "domain": "Energy Grid Telemetry",
+        "context": "Substation SUB-NORTH-09 reported load 412.5 MW at 50.02 Hz frequency. Transformer temperature 61 C. Breaker status: CLOSED. Overload warning inactive.",
+        "schema_instruction": "Extract substation telemetry into JSON: {substation_id: str, load_mw: float, frequency_hz: float, temp_c: int, breaker_status: str, overload_warning: bool}.",
+        "target_json": {
+            "substation_id": "SUB-NORTH-09",
+            "load_mw": 412.5,
+            "frequency_hz": 50.02,
+            "temp_c": 61,
+            "breaker_status": "CLOSED",
+            "overload_warning": False
+        }
+    },
+    {
+        "domain": "Insurance Claim Intake",
+        "context": "Claim CLM-90412 filed by policyholder POL-5581 for auto collision damage. Estimated repair cost $4,850.00 USD. Deductible $500.00. Adjuster assigned: David Kim. Fraud review required: false.",
+        "schema_instruction": "Extract claim into JSON: {claim_id: str, policy_id: str, repair_cost: float, deductible: float, adjuster: str, fraud_review: bool}.",
+        "target_json": {
+            "claim_id": "CLM-90412",
+            "policy_id": "POL-5581",
+            "repair_cost": 4850.00,
+            "deductible": 500.00,
+            "adjuster": "David Kim",
+            "fraud_review": False
+        }
+    },
+    {
+        "domain": "Aviation Flight Dispatch",
+        "context": "Flight dispatch FLT-882 departing SFO for JFK. Aircraft tail N841VA, fuel loaded 48,200 lbs, planned cruise altitude 37000 ft. De-icing required: false.",
+        "schema_instruction": "Extract flight dispatch into JSON: {flight_id: str, origin: str, destination: str, tail_number: str, fuel_lbs: int, deicing_required: bool}.",
+        "target_json": {
+            "flight_id": "FLT-882",
+            "origin": "SFO",
+            "destination": "JFK",
+            "tail_number": "N841VA",
+            "fuel_lbs": 48200,
+            "deicing_required": False
+        }
+    },
+    {
+        "domain": "Retail POS Settlement",
+        "context": "Store STR-204 end-of-day settlement batch POS-7719: 342 transactions totaling $18,940.50 USD. Cash variance $0.00. Terminal offline count: 0. Batch reconciled: true.",
+        "schema_instruction": "Extract POS batch into JSON: {store_id: str, batch_id: str, tx_count: int, total_usd: float, offline_terminals: int, reconciled: bool}.",
+        "target_json": {
+            "store_id": "STR-204",
+            "batch_id": "POS-7719",
+            "tx_count": 342,
+            "total_usd": 18940.50,
+            "offline_terminals": 0,
+            "reconciled": True
+        }
+    },
+    {
+        "domain": "Telecom SLA Incident",
+        "context": "Backbone link LNK-DAL-ORD experienced 18.4 ms latency spike and 0.02% packet loss for 6 minutes. Ticket NET-4421 opened. SLA breach threshold exceeded: false.",
+        "schema_instruction": "Extract network incident into JSON: {link_id: str, ticket_id: str, latency_ms: float, packet_loss_pct: float, duration_mins: int, sla_breached: bool}.",
+        "target_json": {
+            "link_id": "LNK-DAL-ORD",
+            "ticket_id": "NET-4421",
+            "latency_ms": 18.4,
+            "packet_loss_pct": 0.02,
+            "duration_mins": 6,
+            "sla_breached": False
+        }
+    },
+    {
+        "domain": "Manufacturing QA Batch",
+        "context": "Assembly line LINE-B3 produced 1,500 units of Rotor-X9 in lot LOT-2026-88. Defect count: 3 units. Yield rate 99.8%. Lot released for shipment: true.",
+        "schema_instruction": "Extract QA lot into JSON: {line_id: str, lot_id: str, units_produced: int, defect_count: int, yield_pct: float, released: bool}.",
+        "target_json": {
+            "line_id": "LINE-B3",
+            "lot_id": "LOT-2026-88",
+            "units_produced": 1500,
+            "defect_count": 3,
+            "yield_pct": 99.8,
+            "released": True
+        }
+    },
+    {
+        "domain": "Maritime Port Manifest",
+        "context": "Vessel MV-PACIFIC-STAR docked at Berth B-12 in Port of Rotterdam. Container count: 1,420 TEU. Manifest ID MAN-9920. Customs hold: true.",
+        "schema_instruction": "Extract port manifest into JSON: {vessel_name: str, berth: str, port: str, container_teu: int, manifest_id: str, customs_hold: bool}.",
+        "target_json": {
+            "vessel_name": "MV-PACIFIC-STAR",
+            "berth": "B-12",
+            "port": "Port of Rotterdam",
+            "container_teu": 1420,
+            "manifest_id": "MAN-9920",
+            "customs_hold": True
+        }
     }
 ]
 
@@ -188,6 +292,103 @@ def format_prompt(context: str, instruction: str) -> str:
         f"Instruction:\n{instruction}<|im_end|>\n"
         f"<|im_start|>assistant\n"
     )
+
+
+def identify_operational_boundary_tokens_detailed(
+    tokenizer: PreTrainedTokenizerBase,
+    target_json_str: str,
+    boundary_weight: float = 6.0,
+    content_weight: float = 1.0,
+) -> Tuple[List[int], List[float], List[Dict[str, Any]]]:
+    """
+    Tokenizes target_json_str and returns (token_ids, weights, token_details)
+    with explicit token categories for Stage 1 observability.
+    """
+    token_ids = tokenizer.encode(target_json_str, add_special_tokens=False)
+    weights: List[float] = []
+    details: List[Dict[str, Any]] = []
+
+    try:
+        parsed = json.loads(target_json_str)
+        schema_keys = set(parsed.keys())
+    except Exception:
+        schema_keys = set(re.findall(r'"([a-zA-Z0-9_-]+)":', target_json_str))
+
+    syntax_chars = set('{}[]:," \n\t')
+
+    for pos, tid in enumerate(token_ids):
+        tok_str = tokenizer.decode([tid])
+        tok_clean = tok_str.strip()
+
+        if all(c in syntax_chars for c in tok_str):
+            cat = "structural_delimiter"
+            w = float(boundary_weight)
+        elif any(k in tok_clean for k in schema_keys) or tok_clean in {"true", "false", "null"}:
+            cat = "schema_key_or_literal"
+            w = float(boundary_weight)
+        elif re.match(r'^[0-9.]+$', tok_clean):
+            cat = "numeric"
+            w = float(boundary_weight * 0.7)
+        else:
+            cat = "semantic_payload"
+            w = float(content_weight)
+
+        weights.append(w)
+        details.append({
+            "position": pos,
+            "token_id": int(tid),
+            "token_text": tok_str,
+            "category": cat,
+            "weight": w,
+        })
+
+    return token_ids, weights, details
+
+
+def inspect_calibration_record(
+    tokenizer: PreTrainedTokenizerBase,
+    item: Dict[str, Any],
+    boundary_weight: float = 6.0,
+    content_weight: float = 1.0,
+    max_length: int = 512,
+) -> Dict[str, Any]:
+    """Produces a full Stage 1 inspection payload for a single calibration record."""
+    prompt_text = format_prompt(item["context"], item["schema_instruction"])
+    json_target_str = json.dumps(item["target_json"], indent=2)
+    prompt_ids = tokenizer.encode(prompt_text, add_special_tokens=False)
+    _, _, comp_details = identify_operational_boundary_tokens_detailed(
+        tokenizer, json_target_str, boundary_weight=boundary_weight, content_weight=content_weight
+    )
+    prompt_tokens_count = min(len(prompt_ids), max_length)
+    remaining = max(0, max_length - prompt_tokens_count)
+    comp_details_trunc = comp_details[:remaining]
+
+    category_counts: Dict[str, int] = {
+        "ignored_prompt": prompt_tokens_count,
+        "structural_delimiter": 0,
+        "schema_key_or_literal": 0,
+        "numeric": 0,
+        "semantic_payload": 0,
+    }
+    for d in comp_details_trunc:
+        category_counts[d["category"]] = category_counts.get(d["category"], 0) + 1
+
+    return {
+        "domain": item.get("domain", "Unknown"),
+        "prompt_text": prompt_text,
+        "target_json_str": json_target_str,
+        "prompt_token_count": prompt_tokens_count,
+        "completion_token_count": len(comp_details_trunc),
+        "category_counts": category_counts,
+        "completion_tokens": comp_details_trunc,
+    }
+
+
+def compute_dataset_hash(records: List[Dict[str, Any]]) -> str:
+    """Computes a deterministic SHA-256 hash over calibration/evaluation records."""
+    import hashlib
+    payload = json.dumps(records, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def identify_operational_boundary_tokens(

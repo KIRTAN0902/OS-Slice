@@ -719,33 +719,41 @@ def run_slice_wizard_for_model(model_id: Optional[str] = None):
 
 
 def run_slice_pipeline_for_model(model_id: str, operation: str, sparsity_ratio: float):
-    """Runs the 4-stage OS-Slice pipeline with progress updates."""
-    console.print(f"\n[*] Starting OS-Slice 4-stage pipeline for [bold cyan]{model_id}[/bold cyan]...")
+    """Runs the real 4-stage OS-Slice pipeline via the shared ExperimentManager service."""
+    if "JSON" not in operation:
+        console.print(f"\n[bold yellow][!] Operation '{operation}' is a catalog target profile only and has no implemented evaluator/slice yet.[/bold yellow]")
+        Prompt.ask("\nPress Enter to return")
+        return
 
-    stages = [
-        "Stage 1/4: Operational Boundary Token Masking (lambda_struct=6.0)",
-        "Stage 2/4: Empirical Fisher Saliency Profiling (Attention & SwiGLU MLPs)",
-        "Stage 3/4: Layer-Aware Structural Slicing (Zero-masking factual null-space)",
-        "Stage 4/4: Second-Order Optimal Brain Surgeon (OBS) Manifold Compensation"
-    ]
+    proto_dir = WORKSPACE_ROOT / "os_slice_prototype"
+    if str(proto_dir) not in sys.path:
+        sys.path.insert(0, str(proto_dir))
 
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("[progress.description]{task.description}"),
-        BarColumn(),
-        TimeElapsedColumn(),
-        console=console
-    ) as progress:
-        task = progress.add_task("Running OS-Slice pipeline...", total=len(stages))
-        for stage in stages:
-            progress.update(task, description=f"[bold cyan]{stage}[/bold cyan]")
-            time.sleep(1.2)  # Visual cadence for pipeline progression
-            progress.advance(task)
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from config import OSSliceConfig
+    from research.experiment_manager import ExperimentManager
 
-    console.print("\n[bold green][✓] Operational Slicing Pipeline Complete![/bold green]")
-    console.print(f"• Target Manifold: [bold white]{operation}[/bold white]")
-    console.print(f"• Parameter Excision: [bold magenta]-{sparsity_ratio * 100:.1f}%[/bold magenta]")
-    console.print("• Invariant Fidelity: [bold green]100% Guaranteed Strict Schema Parseability[/bold green]")
+    console.print(f"\n[*] Executing real OS-Slice 4-stage pipeline for [bold cyan]{model_id}[/bold cyan]...")
+    cfg = OSSliceConfig(model_id=model_id, default_slicing_ratio=sparsity_ratio)
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        base_model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=cfg.dtype, low_cpu_mem_usage=True).to(cfg.device)
+        mgr = ExperimentManager()
+        res = mgr.run_full_experiment(
+            base_model=base_model,
+            tokenizer=tokenizer,
+            config=cfg,
+            slicing_ratio=sparsity_ratio,
+            source_interface="cli",
+        )
+        man = res["manifest"]
+        m = man.metrics
+        console.print(f"\n[bold green][✓] Experiment {man.experiment_id} Complete![/bold green]")
+        console.print(f"• Active Params: [bold white]{m.get('sliced_active_params', 0):,}[/bold white] / {m.get('base_total_params', 0):,} (-{m.get('active_param_reduction_pct', 0):.2f}%)")
+        console.print(f"• Strict JSON Parseability: Base {m.get('base_strict_valid_rate', 0)*100:.1f}% | Sliced {m.get('sliced_strict_valid_rate', 0)*100:.1f}%")
+        console.print(f"• Artifacts saved under: [dim]os_slice_prototype/experiments/{man.experiment_id}/[/dim]")
+    except Exception as exc:
+        console.print(f"\n[bold red][!] Pipeline execution failed:[/bold red] {exc}")
     Prompt.ask("\nPress Enter to return")
 
 
@@ -788,21 +796,51 @@ def run_interactive_inference_playground(model: Optional[Dict[str, Any]] = None)
         input_text = presets[0][1]
 
     console.print(f"\n[bold yellow]Input Payload:[/bold yellow] {input_text}")
-    console.print("[*] Generating type-safe structured output via OS-Slice micro-model...\n")
+    console.print("[*] Executing real paired inference via shared ModelArenaService...\n")
 
-    # Generate synthetic structured output based on input
-    time.sleep(0.8)
-    if "INV" in input_text or "Invoice" in input_text:
-        json_output = '{\n  "invoice_id": "INV-9901",\n  "account_id": "ACC-002",\n  "vcpu_hours": 1240,\n  "total_charge": 620.0,\n  "currency": "USD",\n  "status": "APPROVED"\n}'
-    elif "SENSOR" in input_text or "Sensor" in input_text:
-        json_output = '{\n  "sensor_id": "SENSOR-401",\n  "zone": "Zone B",\n  "temperature_c": 24.5,\n  "humidity_pct": 55.0,\n  "co2_ppm": 420,\n  "battery_pct": 94\n}'
-    else:
-        json_output = '{\n  "contract_id": "SA-2026-88",\n  "vendor": "Datadog Inc",\n  "client": "Acme Corp",\n  "term_months": 36,\n  "total_value": 450000.0,\n  "auto_renewal": true\n}'
+    proto_dir = WORKSPACE_ROOT / "os_slice_prototype"
+    if str(proto_dir) not in sys.path:
+        sys.path.insert(0, str(proto_dir))
 
-    syntax = Syntax(f"```json\n{json_output}\n```", "markdown", theme="monokai", line_numbers=True)
-    console.print(Panel(syntax, title="✔ Sliced Micro-Model Output (100% Strict JSON Parseable)", border_style="green", box=box.ROUNDED))
+    try:
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        from config import OSSliceConfig
+        from data.generate_calibration import CALIBRATION_RECORDS, build_calibration_dataset, format_prompt
+        from engine.profiler import OperationalProfiler
+        from engine.slicer import StructuralSlicer
+        from engine.compensator import OperationalCompensator
+        from research.model_arena import ModelArenaService
 
-    console.print("[bold green]✔ Invariant Audit:[/bold green] Strict JSON Parseability: [bold green]PASS (100% Valid)[/bold green] | Schema Keys: [bold green]6/6 Adherent[/bold green] | Factual Drift: [bold green]0%[/bold green]")
+        target_id = model["base_model_id"] if model and "base_model_id" in model else "Qwen/Qwen2.5-0.5B-Instruct"
+        cfg = OSSliceConfig(model_id=target_id)
+        tokenizer = AutoTokenizer.from_pretrained(target_id)
+        base_model = AutoModelForCausalLM.from_pretrained(target_id, torch_dtype=cfg.dtype, low_cpu_mem_usage=True).to(cfg.device)
+
+        profiler = OperationalProfiler(base_model, cfg)
+        prof_path = cfg.profiles_dir / "operational_fisher_profile.pt"
+        if target_id == "Qwen/Qwen2.5-0.5B-Instruct" and prof_path.exists():
+            profiler.load_profile(prof_path)
+        else:
+            profiler.profile(build_calibration_dataset(tokenizer, CALIBRATION_RECORDS))
+
+        sliced_model = StructuralSlicer(cfg).apply_slicing(base_model, profiler.head_saliency, profiler.mlp_saliency, slicing_ratio=cfg.default_slicing_ratio, in_place=False)
+        OperationalCompensator(cfg).compensate(sliced_model)
+
+        prompt = format_prompt(input_text, "Extract all relevant fields into strict JSON.")
+        rec = ModelArenaService().run_paired_inference(
+            base_model=base_model,
+            sliced_model=sliced_model,
+            tokenizer=tokenizer,
+            model_id=target_id,
+            slice_id=model["id"] if model else "qwen2.5-0.5b-json-slice",
+            task_id="structured_json_extraction",
+            prompt=prompt,
+            device=cfg.device,
+        )
+        console.print(Panel(rec.sliced.raw_output or "(empty)", title=f"OS-Slice Raw Output ({rec.sliced.run_status})", border_style="green" if rec.sliced.is_valid else "red", box=box.ROUNDED))
+        console.print(f"Strict JSON Valid: {rec.sliced.is_valid} | Latency: {rec.sliced.total_latency_s:.3f}s | Throughput: {rec.sliced.throughput_tps:.1f} tok/s")
+    except Exception as exc:
+        console.print(f"[bold red][!] Live inference failed:[/bold red] {exc}")
     Prompt.ask("\nPress Enter to return")
 
 

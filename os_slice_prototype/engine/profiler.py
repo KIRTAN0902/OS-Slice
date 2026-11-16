@@ -85,6 +85,7 @@ class OperationalProfiler:
         self,
         calibration_dataset: List[Dict[str, torch.Tensor]],
         save_path: Optional[Path] = None,
+        progress_callback: Optional[Any] = None,
     ) -> Dict[str, Any]:
         """
         Executes gradient accumulation over calibration dataset and aggregates
@@ -117,6 +118,7 @@ class OperationalProfiler:
             raise AttributeError("Unable to locate transformer layers in model hierarchy.")
 
         num_samples = len(calibration_dataset)
+        sample_losses: List[float] = []
 
         for idx in track(range(num_samples), description="Profiling Operational Boundaries"):
             sample = calibration_dataset[idx]
@@ -128,7 +130,10 @@ class OperationalProfiler:
 
             self.model.zero_grad()
             loss = self.compute_operational_loss(batch)
+            sample_losses.append(float(loss.detach().cpu().item()))
             loss.backward()
+            if progress_callback is not None:
+                progress_callback(idx + 1, num_samples, sample_losses[-1])
 
             # Aggregate Fisher Saliency for each layer
             with torch.no_grad():
@@ -186,9 +191,16 @@ class OperationalProfiler:
         self.mlp_saliency = mlp_fisher
 
         profile_data = {
+            "model_type": getattr(self.model.config, "model_type", "unknown"),
             "num_layers": self.num_layers,
             "num_heads": self.num_heads,
+            "num_kv_heads": self.num_kv_heads,
+            "hidden_size": self.hidden_size,
+            "head_dim": self.head_dim,
             "intermediate_size": self.intermediate_size,
+            "calibration_sample_count": num_samples,
+            "sample_losses": sample_losses,
+            "mean_operational_loss": sum(sample_losses) / max(len(sample_losses), 1),
             "head_saliency_mean": float(head_fisher.mean().item()),
             "head_saliency_max": float(head_fisher.max().item()),
             "mlp_saliency_mean": float(mlp_fisher.mean().item()),
