@@ -74,13 +74,13 @@ def render_ablation_study():
             .transform_fold(["schema_adherence", "strict_valid_rate"], as_=["Metric", "Score"])
             .mark_bar()
             .encode(
-                x=alt.X("config_id:N", title="Ablation Configuration"),
+                x=alt.X("Metric:N", title=None, axis=alt.Axis(labels=False, ticks=False)),
                 y=alt.Y("Score:Q", title="Score (0-1)", scale=alt.Scale(domain=[0, 1.05])),
                 color=alt.Color("Metric:N", title="Metric"),
-                xOffset="Metric:N",
+                column=alt.Column("config_id:N", title="Ablation Configuration", header=alt.Header(labelOrient="bottom", titleOrient="bottom")),
                 tooltip=["config_id", "config_name", "Metric:N", "Score:Q", "active_reduction_pct"],
             )
-            .properties(height=300, title="Ablation Study: Behavioral Slicing & Compensation Contribution")
+            .properties(height=280, title="Ablation Study: Behavioral Slicing & Compensation Contribution")
         )
         st.altair_chart(abl_chart, use_container_width=True)
         st.dataframe(df, use_container_width=True)
@@ -200,12 +200,25 @@ def render_live_demo():
             cfg = OSSliceConfig(model_id=model_id, default_slicing_ratio=ratio)
             with st.spinner("Running real OS-Slice inference..."):
                 tok, base_model = load_hf_model_and_tokenizer(model_id, cfg.device)
+                from data.generate_calibration import compute_dataset_hash
+                from research.artifact_manager import build_profile_cache_key
+
                 prof = OperationalProfiler(base_model, cfg)
-                p_path = cfg.profiles_dir / "operational_fisher_profile.pt"
+                cache_key = build_profile_cache_key(
+                    model_id=model_id,
+                    revision=getattr(base_model.config, "_commit_hash", None) or "main",
+                    architecture=getattr(base_model.config, "model_type", "unknown"),
+                    operation=cfg.operational_primitive,
+                    calibration_hash=compute_dataset_hash(CALIBRATION_RECORDS),
+                    boundary_weight=cfg.boundary_token_weight,
+                    content_weight=cfg.content_token_weight,
+                    include_eos=True,
+                )
+                p_path = cfg.profiles_dir / f"{cache_key}.pt"
                 if p_path.exists():
                     prof.load_profile(p_path)
                 else:
-                    prof.profile(build_calibration_dataset(tok, CALIBRATION_RECORDS))
+                    prof.profile(build_calibration_dataset(tok, CALIBRATION_RECORDS), save_path=p_path)
                 sliced = StructuralSlicer(cfg).apply_slicing(base_model, prof.head_saliency, prof.mlp_saliency, slicing_ratio=ratio, in_place=False)
                 OperationalCompensator(cfg).compensate(sliced)
                 res = run_single_generation(

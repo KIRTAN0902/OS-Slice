@@ -142,13 +142,13 @@ def render_structural_slicing():
                 .transform_fold(["head_retention_pct", "mlp_retention_pct"], as_=["Component", "RetentionPct"])
                 .mark_bar()
                 .encode(
-                    x=alt.X("layer:O", title="Transformer Layer"),
+                    x=alt.X("Component:N", title=None, axis=alt.Axis(labels=False, ticks=False)),
                     y=alt.Y("RetentionPct:Q", title="Retained Parameters (%)", scale=alt.Scale(domain=[0, 100])),
                     color=alt.Color("Component:N", title="Component"),
-                    xOffset="Component:N",
-                    tooltip=["layer", "role", "Component:N", "RetentionPct:Q"],
+                    column=alt.Column("layer:O", title="Transformer Layer", header=alt.Header(labelOrient="bottom", titleOrient="bottom")),
+                    tooltip=["layer:O", "role:N", "Component:N", "RetentionPct:Q"],
                 )
-                .properties(height=280, title="Per-Layer Component Retention (Protected Interface vs Intermediate Sliced)")
+                .properties(height=240, title="Per-Layer Component Retention (Protected Interface vs Intermediate Sliced)")
             )
             st.altair_chart(ret_chart, use_container_width=True)
 

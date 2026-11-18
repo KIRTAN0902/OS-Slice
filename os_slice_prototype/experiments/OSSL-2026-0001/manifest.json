@@ -1,0 +1,308 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "OSSL-2026-0001",
+  "status": "completed",
+  "created_at": "2026-11-18T12:19:20.905190+00:00",
+  "updated_at": "2026-11-18T12:21:37.307316+00:00",
+  "label": "EOS-enabled Qwen2.5-0.5B 20% slice verification (n=4)",
+  "is_historical_reference": false,
+  "model": {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "architecture": "qwen2",
+    "tokenizer_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "dtype": "float32",
+    "num_layers": 24,
+    "num_heads": 14,
+    "num_kv_heads": 2,
+    "hidden_size": 896,
+    "intermediate_size": 4864,
+    "total_params": 494032768,
+    "physical_size_bytes": 1976131072
+  },
+  "operation": "structured_json_extraction",
+  "slice_id": "qwen2.5-0.5b-instruct-structured_json_extraction-r20",
+  "calibration": {
+    "dataset_id": "enterprise_json_calibration",
+    "dataset_version": "1.0.0",
+    "dataset_hash": "788a811d4c1959f7e878afbd5b9eeb1330bbd08fdb9503bbc1a3ca5cd1f3be45",
+    "sample_count": 8,
+    "sample_ids": [
+      "cal-00",
+      "cal-01",
+      "cal-02",
+      "cal-03",
+      "cal-04",
+      "cal-05",
+      "cal-06",
+      "cal-07"
+    ]
+  },
+  "evaluation": {
+    "dataset_id": "enterprise_json_evaluation",
+    "dataset_version": "1.1.0",
+    "dataset_hash": "7fb704c0f336aa0ab3ca0a7f5f5d171998dcf71a49a413f6f84a6e5bf004504d",
+    "sample_count": 4,
+    "sample_ids": [
+      "eval-00",
+      "eval-01",
+      "eval-02",
+      "eval-03"
+    ]
+  },
+  "slicing": {
+    "ratio": 0.2,
+    "protected_layers": [
+      0,
+      1,
+      22,
+      23
+    ],
+    "variance_preserving_scaling": true
+  },
+  "compensation": {
+    "enabled": true,
+    "method": "diagonal_ridge_damping",
+    "ridge_lambda": 0.001
+  },
+  "runtime": {
+    "device": "cpu",
+    "software_versions": {
+      "python": "3.10.8",
+      "torch": "2.7.1+cpu",
+      "transformers": "4.52.4"
+    },
+    "seed": 123,
+    "source_interface": "cli_sprint_verification"
+  },
+  "stages": {
+    "calibration": {
+      "stage": "calibration",
+      "status": "completed",
+      "started_at": null,
+      "completed_at": "2026-11-18T12:19:21.032789+00:00",
+      "duration_s": 0.09,
+      "summary": {
+        "sample_count": 8,
+        "dataset_hash": "788a811d4c1959f7e878afbd5b9eeb1330bbd08fdb9503bbc1a3ca5cd1f3be45"
+      },
+      "error": null
+    },
+    "profiling": {
+      "stage": "profiling",
+      "status": "completed",
+      "started_at": null,
+      "completed_at": "2026-11-18T12:19:53.807941+00:00",
+      "duration_s": 32.7747,
+      "summary": {
+        "profile_source": "computed_fresh",
+        "cache_key": "Qwen_Qwen2.5-0.5B-Instruct__structured_json_extraction__5f02fe7430a0300d"
+      },
+      "error": null
+    },
+    "slicing": {
+      "stage": "slicing",
+      "status": "completed",
+      "started_at": null,
+      "completed_at": "2026-11-18T12:19:55.103576+00:00",
+      "duration_s": 1.2943,
+      "summary": {
+        "active_params": 437190528,
+        "total_params": 494032768,
+        "active_reduction_pct": 11.5058
+      },
+      "error": null
+    },
+    "compensation": {
+      "stage": "compensation",
+      "status": "completed",
+      "started_at": null,
+      "completed_at": "2026-11-18T12:19:55.475321+00:00",
+      "duration_s": 0.3715,
+      "summary": {
+        "method": "diagonal_ridge_damping",
+        "compensated_layers": 20
+      },
+      "error": null
+    },
+    "evaluation": {
+      "stage": "evaluation",
+      "status": "completed",
+      "started_at": null,
+      "completed_at": "2026-11-18T12:21:37.262556+00:00",
+      "duration_s": 101.7864,
+      "summary": {
+        "experiment_id": "OSSL-2026-0001",
+        "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+        "operation": "structured_json_extraction",
+        "slice_id": "qwen2.5-0.5b-instruct-structured_json_extraction-r20",
+        "slicing_ratio": 0.2,
+        "sample_count": 4,
+        "base_strict_valid_rate": 0.0,
+        "sliced_strict_valid_rate": 0.0,
+        "base_normalized_valid_rate": 1.0,
+        "sliced_normalized_valid_rate": 1.0,
+        "base_schema_adherence": 1.0,
+        "sliced_schema_adherence": 1.0,
+        "base_field_exact_match": 1.0,
+        "sliced_field_exact_match": 1.0,
+        "base_avg_latency_s": 8.330775000000001,
+        "sliced_avg_latency_s": 16.38635,
+        "base_avg_first_token_s": 0.7327750000000001,
+        "sliced_avg_first_token_s": 0.717975,
+        "base_avg_throughput_tps": 8.855,
+        "sliced_avg_throughput_tps": 9.305,
+        "base_total_params": 494032768,
+        "sliced_active_params": 437190528,
+        "active_param_reduction_pct": 11.5058,
+        "base_physical_size_bytes": 1976131072,
+        "sliced_physical_size_bytes": 1976131072,
+        "peak_ram_mb": 4480.84,
+        "device": "cpu",
+        "dtype": "float32",
+        "warmup_included": false,
+        "timing_scope": "generation_wall_time_excluding_load_and_validation"
+      },
+      "error": null
+    }
+  },
+  "artifacts": {
+    "model_info": {
+      "name": "model_info",
+      "relative_path": "model/model_info.json",
+      "sha256": "368a65db81710c2e053350febc84afcdec0c5f5614b1626e63f80a42d7719c55",
+      "size_bytes": 391,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "calibration_metadata": {
+      "name": "calibration_metadata",
+      "relative_path": "calibration/calibration_metadata.json",
+      "sha256": "b1abd519190ad57184b8f309953d1ca93e9ac7c0d2a8410066c9244a4537b299",
+      "size_bytes": 108787,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "fisher_profile": {
+      "name": "fisher_profile",
+      "relative_path": "profiles/fisher_profile.pt",
+      "sha256": "ffd709793ee7c8bb1f2539ed1a58b7b625f38bd3f631c6f3a6a359344cf47dc2",
+      "size_bytes": 471261,
+      "artifact_type": "torch_pt",
+      "metadata": {}
+    },
+    "profile_summary": {
+      "name": "profile_summary",
+      "relative_path": "profiles/profile_summary.json",
+      "sha256": "8260b24c0ed0ba879cf6dbc022776cb213b7a22a5915b84109ee8730ce3052af",
+      "size_bytes": 2513,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "attention_masks": {
+      "name": "attention_masks",
+      "relative_path": "slicing/attention_masks.pt",
+      "sha256": "616aee73b5922aee1589cbd9cbf74feb4b8f5626ec2fddf56951740dc42af77a",
+      "size_bytes": 2977,
+      "artifact_type": "torch_pt",
+      "metadata": {}
+    },
+    "mlp_masks": {
+      "name": "mlp_masks",
+      "relative_path": "slicing/mlp_masks.pt",
+      "sha256": "d8e6e3ef7a258d610b053fb96042fb33e9d6546289d0f468f85669ded2a6b796",
+      "size_bytes": 468535,
+      "artifact_type": "torch_pt",
+      "metadata": {}
+    },
+    "slicing_report": {
+      "name": "slicing_report",
+      "relative_path": "slicing/slicing_report.json",
+      "sha256": "910854aaba2b2ba86c4ce217460d64f6e0f4bd861521ad3f90ac2675f91c0832",
+      "size_bytes": 15018,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "compensation_report": {
+      "name": "compensation_report",
+      "relative_path": "compensation/compensation_report.json",
+      "sha256": "133d66c93d13bfdc2cf6fcbcd51117c9335266002659c0ed98a2bd711e33decf",
+      "size_bytes": 12381,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "predictions": {
+      "name": "predictions",
+      "relative_path": "evaluation/predictions.json",
+      "sha256": "a8378257d9bb8cce72c558e5368e45ca494247b9d06a88dedf1f106e1dfd5769",
+      "size_bytes": 13515,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "metrics": {
+      "name": "metrics",
+      "relative_path": "evaluation/metrics.json",
+      "sha256": "d8ddac0744b63d2f6092e84449e85f10baee73dcbb530dc413b62312913546fc",
+      "size_bytes": 6081,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "validation_errors": {
+      "name": "validation_errors",
+      "relative_path": "evaluation/validation_errors.json",
+      "sha256": "e7013df0cc18797a96e4e835de7f845a0e72261804f12401fc40a3b5c8727c2a",
+      "size_bytes": 1830,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "experiment_report_json": {
+      "name": "experiment_report_json",
+      "relative_path": "report/experiment_report.json",
+      "sha256": "c0539db0e79c41b21e3ebf9039f0648ca8d68f0a837c8f1876967956508dfd9b",
+      "size_bytes": 12320,
+      "artifact_type": "json",
+      "metadata": {}
+    },
+    "experiment_report_md": {
+      "name": "experiment_report_md",
+      "relative_path": "report/experiment_report.md",
+      "sha256": "94452b4eac1f044a67db0169562616fcaa8a3f6abb9b1153cd08b9bc4591c5ee",
+      "size_bytes": 2147,
+      "artifact_type": "markdown",
+      "metadata": {}
+    }
+  },
+  "metrics": {
+    "experiment_id": "OSSL-2026-0001",
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "operation": "structured_json_extraction",
+    "slice_id": "qwen2.5-0.5b-instruct-structured_json_extraction-r20",
+    "slicing_ratio": 0.2,
+    "sample_count": 4,
+    "base_strict_valid_rate": 0.0,
+    "sliced_strict_valid_rate": 0.0,
+    "base_normalized_valid_rate": 1.0,
+    "sliced_normalized_valid_rate": 1.0,
+    "base_schema_adherence": 1.0,
+    "sliced_schema_adherence": 1.0,
+    "base_field_exact_match": 1.0,
+    "sliced_field_exact_match": 1.0,
+    "base_avg_latency_s": 8.330775000000001,
+    "sliced_avg_latency_s": 16.38635,
+    "base_avg_first_token_s": 0.7327750000000001,
+    "sliced_avg_first_token_s": 0.717975,
+    "base_avg_throughput_tps": 8.855,
+    "sliced_avg_throughput_tps": 9.305,
+    "base_total_params": 494032768,
+    "sliced_active_params": 437190528,
+    "active_param_reduction_pct": 11.5058,
+    "base_physical_size_bytes": 1976131072,
+    "sliced_physical_size_bytes": 1976131072,
+    "peak_ram_mb": 4480.84,
+    "device": "cpu",
+    "dtype": "float32",
+    "warmup_included": false,
+    "timing_scope": "generation_wall_time_excluding_load_and_validation"
+  },
+  "error": null
+}

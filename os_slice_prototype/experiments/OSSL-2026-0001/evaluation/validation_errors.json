@@ -1,0 +1,66 @@
+[
+  {
+    "idx": 0,
+    "role": "base",
+    "domain": "Legal Contract Extraction",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": false
+  },
+  {
+    "idx": 0,
+    "role": "sliced",
+    "domain": "Legal Contract Extraction",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": true
+  },
+  {
+    "idx": 1,
+    "role": "base",
+    "domain": "Cloud Infrastructure Billing",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": false
+  },
+  {
+    "idx": 1,
+    "role": "sliced",
+    "domain": "Cloud Infrastructure Billing",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": true
+  },
+  {
+    "idx": 2,
+    "role": "base",
+    "domain": "IoT Environmental Monitoring",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": false
+  },
+  {
+    "idx": 2,
+    "role": "sliced",
+    "domain": "IoT Environmental Monitoring",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": true
+  },
+  {
+    "idx": 3,
+    "role": "base",
+    "domain": "Database Migration Job",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": false
+  },
+  {
+    "idx": 3,
+    "role": "sliced",
+    "domain": "Database Migration Job",
+    "error": "Strict JSONDecodeError: Expecting value (line 1, col 1)",
+    "normalized_valid": true,
+    "has_trailing_text": false
+  }
+]

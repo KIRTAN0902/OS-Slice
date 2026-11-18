@@ -1,0 +1,3921 @@
+{
+  "dataset_id": "enterprise_json_calibration",
+  "dataset_hash": "788a811d4c1959f7e878afbd5b9eeb1330bbd08fdb9503bbc1a3ca5cd1f3be45",
+  "sample_count": 8,
+  "boundary_token_weight": 6.0,
+  "numeric_token_weight": 4.2,
+  "content_token_weight": 1.0,
+  "prompt_label_id": -100,
+  "prompt_weight": 0.0,
+  "inspections": [
+    {
+      "domain": "Financial Transactions",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nPayment notification: On Oct 21, user USR-8812 processed a domestic wire transfer of $14,250.00 USD to recipient vendor Apex Logistics LLC. Transaction reference is WTRX-90142. Risk assessment completed: cleared with no compliance flags.\n\nInstruction:\nExtract the transaction details into JSON conforming to schema: {transaction_id: str, user_id: str, amount: float, currency: str, recipient: str, is_flagged: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"transaction_id\": \"WTRX-90142\",\n  \"user_id\": \"USR-8812\",\n  \"amount\": 14250.0,\n  \"currency\": \"USD\",\n  \"recipient\": \"Apex Logistics LLC\",\n  \"is_flagged\": false\n}",
+      "prompt_token_count": 157,
+      "completion_token_count": 70,
+      "category_counts": {
+        "ignored_prompt": 157,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 4,
+        "numeric": 16,
+        "semantic_payload": 18,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 13528,
+          "token_text": "transaction",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 54,
+          "token_text": "W",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 8,
+          "token_id": 2378,
+          "token_text": "TR",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 55,
+          "token_text": "X",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 10,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 11,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 12,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 13,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 14,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 15,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 16,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 17,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 18,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 19,
+          "token_id": 872,
+          "token_text": "user",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 20,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 21,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 22,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 23,
+          "token_id": 49558,
+          "token_text": "USR",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 24,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 25,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 26,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 27,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 28,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 29,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 30,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 31,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 6045,
+          "token_text": "amount",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 33,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 34,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 35,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 36,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 37,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 38,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 39,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 40,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 41,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 42,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 43,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 44,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 45,
+          "token_id": 15973,
+          "token_text": "currency",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 46,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 48,
+          "token_id": 26749,
+          "token_text": "USD",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 49,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 50,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 51,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 52,
+          "token_id": 42610,
+          "token_text": "recipient",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 53,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 54,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 55,
+          "token_id": 10611,
+          "token_text": "Ap",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 56,
+          "token_id": 327,
+          "token_text": "ex",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 57,
+          "token_id": 70322,
+          "token_text": " Logistics",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 58,
+          "token_id": 15262,
+          "token_text": " LLC",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 59,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 60,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 61,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 62,
+          "token_id": 285,
+          "token_text": "is",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 63,
+          "token_id": 10933,
+          "token_text": "_flag",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 64,
+          "token_id": 3556,
+          "token_text": "ged",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 65,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 66,
+          "token_id": 895,
+          "token_text": " false",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 67,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 68,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 69,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "DevOps Incident Response",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nALERT: Service 'auth-gateway' triggered HTTP 504 gateway timeout on node k8s-node-us-east-4a at 14:02:11 UTC. Severity level set to P1-CRITICAL. Root cause identified as Redis cluster replica desync. Immediate manual failover required.\n\nInstruction:\nExtract the incident alert into JSON with schema: {service: str, error_code: int, severity: str, node_id: str, action_required: str, automated_restart: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"service\": \"auth-gateway\",\n  \"error_code\": 504,\n  \"severity\": \"P1-CRITICAL\",\n  \"node_id\": \"k8s-node-us-east-4a\",\n  \"action_required\": \"manual failover\",\n  \"automated_restart\": false\n}",
+      "prompt_token_count": 157,
+      "completion_token_count": 67,
+      "category_counts": {
+        "ignored_prompt": 157,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 3,
+        "numeric": 6,
+        "semantic_payload": 26,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 7936,
+          "token_text": "service",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 4,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 5,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 3242,
+          "token_text": "auth",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 7,
+          "token_id": 2371,
+          "token_text": "-g",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 8,
+          "token_id": 12043,
+          "token_text": "ateway",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 10,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 11,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 12,
+          "token_id": 841,
+          "token_text": "error",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 13,
+          "token_id": 4136,
+          "token_text": "_code",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 14,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 15,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 16,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 17,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 18,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 19,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 20,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 21,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 22,
+          "token_id": 77019,
+          "token_text": "severity",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 23,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 24,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 25,
+          "token_id": 47,
+          "token_text": "P",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 26,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 27,
+          "token_id": 7658,
+          "token_text": "-C",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 28,
+          "token_id": 49,
+          "token_text": "R",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 29,
+          "token_id": 46817,
+          "token_text": "ITICAL",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 30,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 31,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 33,
+          "token_id": 3509,
+          "token_text": "node",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 34,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 35,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 36,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 37,
+          "token_id": 74,
+          "token_text": "k",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 38,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 39,
+          "token_id": 82,
+          "token_text": "s",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 40,
+          "token_id": 39054,
+          "token_text": "-node",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 41,
+          "token_id": 25682,
+          "token_text": "-us",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 42,
+          "token_id": 39507,
+          "token_text": "-east",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 43,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 44,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 45,
+          "token_id": 64,
+          "token_text": "a",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 46,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 48,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 49,
+          "token_id": 1311,
+          "token_text": "action",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 50,
+          "token_id": 18743,
+          "token_text": "_required",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 51,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 52,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 53,
+          "token_id": 19730,
+          "token_text": "manual",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 54,
+          "token_id": 3690,
+          "token_text": " fail",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 55,
+          "token_id": 1975,
+          "token_text": "over",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 56,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 57,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 58,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 59,
+          "token_id": 27073,
+          "token_text": "autom",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 60,
+          "token_id": 657,
+          "token_text": "ated",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 61,
+          "token_id": 69392,
+          "token_text": "_restart",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 62,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 63,
+          "token_id": 895,
+          "token_text": " false",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 64,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 65,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 66,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "Clinical Assessment",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nClinical note: Patient MRN-44910 presented with acute persistent bronchospasm and dyspnea. Oxygen saturation measured at 91%. Diagnosis confirmed as Acute Exacerbation of Asthma (ICD-10 J45.901). Prescribed 50mg Prednisone for 5 days. Follow-up consultation scheduled in 7 days.\n\nInstruction:\nExtract clinical record into JSON conforming to: {patient_mrn: str, diagnosis: str, icd_code: str, spo2_percent: int, follow_up_days: int, admission_required: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"patient_mrn\": \"MRN-44910\",\n  \"diagnosis\": \"Acute Exacerbation of Asthma\",\n  \"icd_code\": \"J45.901\",\n  \"spo2_percent\": 91,\n  \"follow_up_days\": 7,\n  \"admission_required\": false\n}",
+      "prompt_token_count": 177,
+      "completion_token_count": 76,
+      "category_counts": {
+        "ignored_prompt": 177,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 1,
+        "numeric": 15,
+        "semantic_payload": 28,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 22722,
+          "token_text": "patient",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 717,
+          "token_text": "_m",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 35622,
+          "token_text": "rn",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 6,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 8,
+          "token_id": 18446,
+          "token_text": "MR",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 45,
+          "token_text": "N",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 10,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 11,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 12,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 13,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 14,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 15,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 16,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 17,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 18,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 19,
+          "token_id": 8579,
+          "token_text": "di",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 20,
+          "token_id": 49815,
+          "token_text": "agnosis",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 21,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 22,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 23,
+          "token_id": 11654,
+          "token_text": "Ac",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 24,
+          "token_id": 1070,
+          "token_text": "ute",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 25,
+          "token_id": 1374,
+          "token_text": " Ex",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 26,
+          "token_id": 50819,
+          "token_text": "acerb",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 27,
+          "token_id": 367,
+          "token_text": "ation",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 28,
+          "token_id": 315,
+          "token_text": " of",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 29,
+          "token_id": 20113,
+          "token_text": " Ast",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 30,
+          "token_id": 40353,
+          "token_text": "hma",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 31,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 33,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 34,
+          "token_id": 292,
+          "token_text": "ic",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 35,
+          "token_id": 67,
+          "token_text": "d",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 36,
+          "token_id": 4136,
+          "token_text": "_code",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 37,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 38,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 39,
+          "token_id": 41,
+          "token_text": "J",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 40,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 41,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 42,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 43,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 44,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 45,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 46,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 48,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 49,
+          "token_id": 82859,
+          "token_text": "spo",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 50,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 51,
+          "token_id": 29883,
+          "token_text": "_percent",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 52,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 53,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 54,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 55,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 56,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 57,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 58,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 59,
+          "token_id": 18559,
+          "token_text": "follow",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 60,
+          "token_id": 8237,
+          "token_text": "_up",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 61,
+          "token_id": 28353,
+          "token_text": "_days",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 62,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 63,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 64,
+          "token_id": 22,
+          "token_text": "7",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 65,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 66,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 67,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 68,
+          "token_id": 329,
+          "token_text": "ad",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 69,
+          "token_id": 2728,
+          "token_text": "mission",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 70,
+          "token_id": 18743,
+          "token_text": "_required",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 71,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 72,
+          "token_id": 895,
+          "token_text": " false",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 73,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 74,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 75,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "E-Commerce Logistics",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nShipment update: Consignment PKG-78234 containing 3 units of Industrial Sensor Pod (SKU: ISP-09) shipped via Courier FedEx Priority. Total weight 4.8 kg. Estimated arrival date is 2026-10-25. Signature required upon delivery.\n\nInstruction:\nExtract shipment dispatch into JSON: {package_id: str, sku: str, quantity: int, carrier: str, weight_kg: float, signature_required: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"package_id\": \"PKG-78234\",\n  \"sku\": \"ISP-09\",\n  \"quantity\": 3,\n  \"carrier\": \"FedEx Priority\",\n  \"weight_kg\": 4.8,\n  \"signature_required\": true\n}",
+      "prompt_token_count": 153,
+      "completion_token_count": 61,
+      "category_counts": {
+        "ignored_prompt": 153,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 4,
+        "numeric": 11,
+        "semantic_payload": 14,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 1722,
+          "token_text": "package",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 86336,
+          "token_text": "PKG",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 8,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 22,
+          "token_text": "7",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 10,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 11,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 12,
+          "token_id": 18,
+          "token_text": "3",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 13,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 14,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 15,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 16,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 17,
+          "token_id": 39929,
+          "token_text": "sku",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 18,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 19,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 20,
+          "token_id": 55506,
+          "token_text": "ISP",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 21,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 22,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 23,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 24,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 25,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 26,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 27,
+          "token_id": 13523,
+          "token_text": "quantity",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 28,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 29,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 30,
+          "token_id": 18,
+          "token_text": "3",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 31,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 33,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 34,
+          "token_id": 65985,
+          "token_text": "carrier",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 35,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 36,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 37,
+          "token_id": 91787,
+          "token_text": "Fed",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 38,
+          "token_id": 840,
+          "token_text": "Ex",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 39,
+          "token_id": 31920,
+          "token_text": " Priority",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 40,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 41,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 42,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 43,
+          "token_id": 4765,
+          "token_text": "weight",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 44,
+          "token_id": 4698,
+          "token_text": "_k",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 45,
+          "token_id": 70,
+          "token_text": "g",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 46,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 48,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 49,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 50,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 51,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 52,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 53,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 54,
+          "token_id": 34140,
+          "token_text": "signature",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 55,
+          "token_id": 18743,
+          "token_text": "_required",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 56,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 57,
+          "token_id": 830,
+          "token_text": " true",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 58,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 59,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 60,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "Customer Support Dispatch",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nInbound ticket #TCK-5521 from Enterprise customer Quantum Dynamics. The customer reports API rate limiting errors blocking production workloads. Priority tagged as HIGH. Assigned engineer is Sarah Chen.\n\nInstruction:\nExtract ticket data into JSON: {ticket_id: str, client_name: str, issue_category: str, priority: str, assigned_to: str, escalated: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"ticket_id\": \"TCK-5521\",\n  \"client_name\": \"Quantum Dynamics\",\n  \"issue_category\": \"API rate limiting\",\n  \"priority\": \"HIGH\",\n  \"assigned_to\": \"Sarah Chen\",\n  \"escalated\": true\n}",
+      "prompt_token_count": 128,
+      "completion_token_count": 60,
+      "category_counts": {
+        "ignored_prompt": 128,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 2,
+        "numeric": 4,
+        "semantic_payload": 22,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 26534,
+          "token_text": "ticket",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 51,
+          "token_text": "T",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 8,
+          "token_id": 3021,
+          "token_text": "CK",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 10,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 11,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 12,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 13,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 14,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 15,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 16,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 17,
+          "token_id": 2972,
+          "token_text": "client",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 18,
+          "token_id": 1269,
+          "token_text": "_name",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 19,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 20,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 21,
+          "token_id": 44220,
+          "token_text": "Quant",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 22,
+          "token_id": 372,
+          "token_text": "um",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 23,
+          "token_id": 52611,
+          "token_text": " Dynamics",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 24,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 25,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 26,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 27,
+          "token_id": 11159,
+          "token_text": "issue",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 28,
+          "token_id": 11847,
+          "token_text": "_category",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 29,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 30,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 31,
+          "token_id": 7082,
+          "token_text": "API",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 32,
+          "token_id": 4379,
+          "token_text": " rate",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 33,
+          "token_id": 32894,
+          "token_text": " limiting",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 34,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 35,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 36,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 37,
+          "token_id": 23582,
+          "token_text": "priority",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 38,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 39,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 40,
+          "token_id": 90219,
+          "token_text": "HIGH",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 41,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 42,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 43,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 44,
+          "token_id": 39021,
+          "token_text": "assigned",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 45,
+          "token_id": 2346,
+          "token_text": "_to",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 46,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 48,
+          "token_id": 53083,
+          "token_text": "Sarah",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 49,
+          "token_id": 24495,
+          "token_text": " Chen",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 50,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 51,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 52,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 53,
+          "token_id": 81082,
+          "token_text": "escal",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 54,
+          "token_id": 657,
+          "token_text": "ated",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 55,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 56,
+          "token_id": 830,
+          "token_text": " true",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 57,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 58,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 59,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "Cybersecurity Audit",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nFirewall audit log: Ingress connection from IP 198.51.100.42 targeting port 22 (SSH) blocked by rule SEC-R-401. 14 repeated failed handshake attempts detected within 30 seconds. Threat classification: Brute Force Attempt. IP placed on temporary blocklist.\n\nInstruction:\nExtract firewall event into JSON: {source_ip: str, target_port: int, rule_id: str, attack_type: str, attempts: int, is_blocked: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"source_ip\": \"198.51.100.42\",\n  \"target_port\": 22,\n  \"rule_id\": \"SEC-R-401\",\n  \"attack_type\": \"Brute Force Attempt\",\n  \"attempts\": 14,\n  \"is_blocked\": true\n}",
+      "prompt_token_count": 160,
+      "completion_token_count": 72,
+      "category_counts": {
+        "ignored_prompt": 160,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 1,
+        "numeric": 20,
+        "semantic_payload": 19,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 2427,
+          "token_text": "source",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 10385,
+          "token_text": "_ip",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 8,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 9,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 10,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 11,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 12,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 13,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 14,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 15,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 16,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 17,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 18,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 19,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 20,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 21,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 22,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 23,
+          "token_id": 5657,
+          "token_text": "target",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 24,
+          "token_id": 8716,
+          "token_text": "_port",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 25,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 26,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 27,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 28,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 29,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 30,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 31,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 12937,
+          "token_text": "rule",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 33,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 34,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 35,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 36,
+          "token_id": 25548,
+          "token_text": "SEC",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 37,
+          "token_id": 10911,
+          "token_text": "-R",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 38,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 39,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 40,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 41,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 42,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 43,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 44,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 45,
+          "token_id": 20566,
+          "token_text": "attack",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 46,
+          "token_id": 1819,
+          "token_text": "_type",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 47,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 48,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 49,
+          "token_id": 6828,
+          "token_text": "Br",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 50,
+          "token_id": 1070,
+          "token_text": "ute",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 51,
+          "token_id": 11732,
+          "token_text": " Force",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 52,
+          "token_id": 43517,
+          "token_text": " Attempt",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 53,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 54,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 55,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 56,
+          "token_id": 266,
+          "token_text": "at",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 57,
+          "token_id": 33272,
+          "token_text": "tempts",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 58,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 59,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 60,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 61,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 62,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 63,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 64,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 65,
+          "token_id": 285,
+          "token_text": "is",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 66,
+          "token_id": 89223,
+          "token_text": "_blocked",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 67,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 68,
+          "token_id": 830,
+          "token_text": " true",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 69,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 70,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 71,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "HR Employee Records",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nOnboarding confirmation: Employee EMP-1093, Marcus Vance, joining department 'Data Engineering' as Senior Distributed Systems Engineer. Work location: Remote (Seattle, WA). Reporting manager is Dr. Emily Thorne. Clearance level 2 verified.\n\nInstruction:\nExtract employee onboarding into JSON: {emp_id: str, full_name: str, department: str, role: str, location_type: str, clearance_level: int}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"emp_id\": \"EMP-1093\",\n  \"full_name\": \"Marcus Vance\",\n  \"department\": \"Data Engineering\",\n  \"role\": \"Senior Distributed Systems Engineer\",\n  \"location_type\": \"Remote\",\n  \"clearance_level\": 2\n}",
+      "prompt_token_count": 140,
+      "completion_token_count": 60,
+      "category_counts": {
+        "ignored_prompt": 140,
+        "structural_delimiter": 32,
+        "schema_key_or_literal": 2,
+        "numeric": 5,
+        "semantic_payload": 20,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 3262,
+          "token_text": "emp",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 24222,
+          "token_text": "EMP",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 8,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 10,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 11,
+          "token_id": 24,
+          "token_text": "9",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 12,
+          "token_id": 18,
+          "token_text": "3",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 13,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 14,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 15,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 16,
+          "token_id": 8878,
+          "token_text": "full",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 17,
+          "token_id": 1269,
+          "token_text": "_name",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 18,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 19,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 20,
+          "token_id": 82534,
+          "token_text": "Marcus",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 21,
+          "token_id": 91268,
+          "token_text": " Vance",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 22,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 23,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 24,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 25,
+          "token_id": 27314,
+          "token_text": "department",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 26,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 27,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 28,
+          "token_id": 1043,
+          "token_text": "Data",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 29,
+          "token_id": 16595,
+          "token_text": " Engineering",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 30,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 31,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 33,
+          "token_id": 5778,
+          "token_text": "role",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 34,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 35,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 36,
+          "token_id": 47095,
+          "token_text": "Senior",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 37,
+          "token_id": 43955,
+          "token_text": " Distributed",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 38,
+          "token_id": 14917,
+          "token_text": " Systems",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 39,
+          "token_id": 28383,
+          "token_text": " Engineer",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 40,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 41,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 42,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 43,
+          "token_id": 2527,
+          "token_text": "location",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 44,
+          "token_id": 1819,
+          "token_text": "_type",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 45,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 46,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 24703,
+          "token_text": "Remote",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 48,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 49,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 50,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 51,
+          "token_id": 7422,
+          "token_text": "clear",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 52,
+          "token_id": 681,
+          "token_text": "ance",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 53,
+          "token_id": 8274,
+          "token_text": "_level",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 54,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 55,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 56,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 57,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 58,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 59,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    },
+    {
+      "domain": "Supply Chain Inventory",
+      "prompt_text": "<|im_start|>system\nYou are a deterministic enterprise structured data extraction engine. Extract information strictly conforming to the requested JSON schema. Output pure, valid JSON with no conversational text or markdown code blocks.<|im_end|>\n<|im_start|>user\nContext:\nWarehouse audit report: Warehouse WH-CHICAGO-2 verified stock for item Part-BrakeAssembly-42. Current on-hand quantity is 840 units. Minimum safe buffer is 300 units. Unit cost is $112.50 USD. Reorder status currently NOT required.\n\nInstruction:\nExtract stock status into JSON: {warehouse_id: str, part_number: str, on_hand: int, safety_buffer: int, unit_cost: float, reorder_needed: bool}.<|im_end|>\n<|im_start|>assistant\n",
+      "target_json_str": "{\n  \"warehouse_id\": \"WH-CHICAGO-2\",\n  \"part_number\": \"Part-BrakeAssembly-42\",\n  \"on_hand\": 840,\n  \"safety_buffer\": 300,\n  \"unit_cost\": 112.5,\n  \"reorder_needed\": false\n}",
+      "prompt_token_count": 155,
+      "completion_token_count": 73,
+      "category_counts": {
+        "ignored_prompt": 155,
+        "structural_delimiter": 31,
+        "schema_key_or_literal": 1,
+        "numeric": 14,
+        "semantic_payload": 26,
+        "eos_termination": 1
+      },
+      "completion_tokens": [
+        {
+          "position": 0,
+          "token_id": 515,
+          "token_text": "{\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 1,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 2,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 3,
+          "token_id": 45546,
+          "token_text": "warehouse",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 4,
+          "token_id": 842,
+          "token_text": "_id",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 5,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 6,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 7,
+          "token_id": 19890,
+          "token_text": "WH",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 8,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 9,
+          "token_id": 2149,
+          "token_text": "CH",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 10,
+          "token_id": 1317,
+          "token_text": "IC",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 11,
+          "token_id": 71061,
+          "token_text": "AGO",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 12,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 13,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 14,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 15,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 16,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 17,
+          "token_id": 4480,
+          "token_text": "part",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 18,
+          "token_id": 5500,
+          "token_text": "_number",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 19,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 20,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 21,
+          "token_id": 5800,
+          "token_text": "Part",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 22,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 23,
+          "token_id": 6828,
+          "token_text": "Br",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 24,
+          "token_id": 726,
+          "token_text": "ake",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 25,
+          "token_id": 25791,
+          "token_text": "Assembly",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 26,
+          "token_id": 12,
+          "token_text": "-",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 27,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 28,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 29,
+          "token_id": 756,
+          "token_text": "\",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 30,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 31,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 32,
+          "token_id": 263,
+          "token_text": "on",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 33,
+          "token_id": 23194,
+          "token_text": "_hand",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 34,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 35,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 36,
+          "token_id": 23,
+          "token_text": "8",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 37,
+          "token_id": 19,
+          "token_text": "4",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 38,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 39,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 40,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 41,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 42,
+          "token_id": 82,
+          "token_text": "s",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 43,
+          "token_id": 38618,
+          "token_text": "afety",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 44,
+          "token_id": 7776,
+          "token_text": "_buffer",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 45,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 46,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 47,
+          "token_id": 18,
+          "token_text": "3",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 48,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 49,
+          "token_id": 15,
+          "token_text": "0",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 50,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 51,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 52,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 53,
+          "token_id": 3843,
+          "token_text": "unit",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 54,
+          "token_id": 15890,
+          "token_text": "_cost",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 55,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 56,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 57,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 58,
+          "token_id": 16,
+          "token_text": "1",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 59,
+          "token_id": 17,
+          "token_text": "2",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 60,
+          "token_id": 13,
+          "token_text": ".",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 61,
+          "token_id": 20,
+          "token_text": "5",
+          "category": "numeric",
+          "weight": 4.199999999999999
+        },
+        {
+          "position": 62,
+          "token_id": 345,
+          "token_text": ",\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 63,
+          "token_id": 220,
+          "token_text": " ",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 64,
+          "token_id": 330,
+          "token_text": " \"",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 65,
+          "token_id": 265,
+          "token_text": "re",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 66,
+          "token_id": 1358,
+          "token_text": "order",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 67,
+          "token_id": 57426,
+          "token_text": "_needed",
+          "category": "semantic_payload",
+          "weight": 1.0
+        },
+        {
+          "position": 68,
+          "token_id": 788,
+          "token_text": "\":",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 69,
+          "token_id": 895,
+          "token_text": " false",
+          "category": "schema_key_or_literal",
+          "weight": 6.0
+        },
+        {
+          "position": 70,
+          "token_id": 198,
+          "token_text": "\n",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 71,
+          "token_id": 92,
+          "token_text": "}",
+          "category": "structural_delimiter",
+          "weight": 6.0
+        },
+        {
+          "position": 72,
+          "token_id": 151645,
+          "token_text": "<eos>",
+          "category": "eos_termination",
+          "weight": 6.0
+        }
+      ]
+    }
+  ]
+}

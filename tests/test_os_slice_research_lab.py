@@ -168,6 +168,41 @@ def test_calibration_weights_and_dataset_hash():
     assert h1 == h2 and len(h1) == 64
 
 
+def test_calibration_eos_termination_inclusion_and_alignment():
+    tok = MiniTokenizer()
+    tok.eos_token_id = 127
+    ds = build_calibration_dataset(tok, records=CALIBRATION_RECORDS[:1], boundary_weight=6.0, content_weight=1.0)
+    sample = ds[0]
+
+    # Tensor alignment across all sequence tensors
+    n = len(sample["input_ids"])
+    assert len(sample["attention_mask"]) == n
+    assert len(sample["labels"]) == n
+    assert len(sample["operational_weights"]) == n
+
+    # Prompt tokens remain masked (-100) with 0.0 weight
+    prompt_mask = sample["labels"] == -100
+    assert prompt_mask.any()
+    assert (sample["operational_weights"][prompt_mask] == 0.0).all()
+
+    # EOS token is appended at the end of completion with boundary weight 6.0 and included in loss
+    assert sample["input_ids"][-1].item() == 127
+    assert sample["labels"][-1].item() == 127
+    assert sample["operational_weights"][-1].item() == pytest.approx(6.0)
+
+    # Shifted loss (used by OperationalProfiler.compute_operational_loss) includes EOS
+    shift_labels = sample["labels"][1:]
+    shift_weights = sample["operational_weights"][1:]
+    assert shift_labels[-1].item() == 127
+    assert shift_weights[-1].item() == pytest.approx(6.0)
+
+    # Inspection also reports eos_termination token
+    insp = inspect_calibration_record(tok, CALIBRATION_RECORDS[0], boundary_weight=6.0, content_weight=1.0)
+    assert insp["category_counts"].get("eos_termination", 0) == 1
+    assert insp["completion_tokens"][-1]["token_id"] == 127
+    assert insp["completion_tokens"][-1]["weight"] == pytest.approx(6.0)
+
+
 def test_profiler_dimensions_and_cache_key_isolation():
     torch.manual_seed(42)
     model = MiniCausalLM()

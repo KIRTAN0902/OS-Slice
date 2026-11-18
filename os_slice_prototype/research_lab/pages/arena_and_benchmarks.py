@@ -89,13 +89,26 @@ def render_model_arena():
         cfg = OSSliceConfig(model_id=sel_model_id, default_slicing_ratio=slicing_ratio)
         with st.spinner(f"Running paired inference for {sel_model_id} on {cfg.device}..."):
             tokenizer, base_model = load_hf_model_and_tokenizer(sel_model_id, cfg.device)
+            from data.generate_calibration import compute_dataset_hash
+            from research.artifact_manager import build_profile_cache_key
+
             profiler = OperationalProfiler(base_model, cfg)
-            profile_path = cfg.profiles_dir / "operational_fisher_profile.pt"
-            if sel_model_id == "Qwen/Qwen2.5-0.5B-Instruct" and profile_path.exists():
+            cache_key = build_profile_cache_key(
+                model_id=sel_model_id,
+                revision=getattr(base_model.config, "_commit_hash", None) or "main",
+                architecture=getattr(base_model.config, "model_type", "unknown"),
+                operation=cfg.operational_primitive,
+                calibration_hash=compute_dataset_hash(CALIBRATION_RECORDS),
+                boundary_weight=cfg.boundary_token_weight,
+                content_weight=cfg.content_token_weight,
+                include_eos=True,
+            )
+            profile_path = cfg.profiles_dir / f"{cache_key}.pt"
+            if profile_path.exists():
                 profiler.load_profile(profile_path)
             else:
                 calib_ds = build_calibration_dataset(tokenizer, CALIBRATION_RECORDS, boundary_weight=cfg.boundary_token_weight)
-                profiler.profile(calib_ds)
+                profiler.profile(calib_ds, save_path=profile_path)
 
             slicer = StructuralSlicer(cfg)
             sliced_model = slicer.apply_slicing(base_model, profiler.head_saliency, profiler.mlp_saliency, slicing_ratio=slicing_ratio, in_place=False)
@@ -241,13 +254,13 @@ def render_performance_dashboard():
             alt.Chart(pd.DataFrame(chart_rows))
             .mark_bar()
             .encode(
-                x=alt.X("Metric:N", title="Evaluation Metric"),
+                x=alt.X("Model:N", title=None, axis=alt.Axis(labels=False, ticks=False)),
                 y=alt.Y("Value:Q", title="Score (%)", scale=alt.Scale(domain=[0, 105])),
                 color=alt.Color("Model:N", scale=alt.Scale(range=["#60a5fa", "#34d399"])),
-                xOffset="Model:N",
+                column=alt.Column("Metric:N", title="Evaluation Metric", header=alt.Header(labelOrient="bottom", titleOrient="bottom")),
                 tooltip=["Metric", "Model", "Value"],
             )
-            .properties(height=300, title="Base vs OS-Slice Quality & Validity Comparison")
+            .properties(height=280, title="Base vs OS-Slice Quality & Validity Comparison")
         )
         st.altair_chart(perf_chart, use_container_width=True)
         st.dataframe(pd.DataFrame(rows), use_container_width=True)
@@ -271,13 +284,13 @@ def render_performance_dashboard():
                 alt.Chart(pd.DataFrame(hist_chart_rows))
                 .mark_bar()
                 .encode(
-                    x=alt.X("Metric:N", title="Metric (Historical KT Artifact, n=4)"),
+                    x=alt.X("Model:N", title=None, axis=alt.Axis(labels=False, ticks=False)),
                     y=alt.Y("Value:Q", title="Measured Value"),
                     color=alt.Color("Model:N", scale=alt.Scale(range=["#60a5fa", "#34d399"])),
-                    xOffset="Model:N",
+                    column=alt.Column("Metric:N", title="Metric (Historical KT Artifact, n=4)", header=alt.Header(labelOrient="bottom", titleOrient="bottom")),
                     tooltip=["Metric", "Model", "Value"],
                 )
-                .properties(height=280, title="Historical KT Reference: Base vs OS-Slice (n=4)")
+                .properties(height=260, title="Historical KT Reference: Base vs OS-Slice (n=4)")
             )
             st.altair_chart(h_chart, use_container_width=True)
             hist_rows = [

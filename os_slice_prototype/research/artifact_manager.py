@@ -37,6 +37,7 @@ def build_profile_cache_key(
     calibration_hash: str,
     boundary_weight: float,
     content_weight: float,
+    include_eos: bool = True,
 ) -> str:
     """
     Constructs a strict model- and task-specific cache key so a Fisher profile
@@ -50,6 +51,7 @@ def build_profile_cache_key(
         "calibration_hash": calibration_hash,
         "boundary_weight": round(float(boundary_weight), 4),
         "content_weight": round(float(content_weight), 4),
+        "include_eos": bool(include_eos),
     }
     digest = compute_dict_hash(raw)[:16]
     safe_model = model_id.replace("/", "_").replace(":", "_")

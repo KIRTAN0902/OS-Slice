@@ -363,12 +363,24 @@ def inspect_calibration_record(
     remaining = max(0, max_length - prompt_tokens_count)
     comp_details_trunc = comp_details[:remaining]
 
+    eos_id = getattr(tokenizer, "eos_token_id", None)
+    if eos_id is not None:
+        comp_details_trunc.append({
+            "position": len(comp_details_trunc),
+            "token_id": int(eos_id),
+            "token_text": "<eos>",
+            "category": "eos_termination",
+            "weight": float(boundary_weight),
+        })
+        comp_details_trunc = comp_details_trunc[:remaining]
+
     category_counts: Dict[str, int] = {
         "ignored_prompt": prompt_tokens_count,
         "structural_delimiter": 0,
         "schema_key_or_literal": 0,
         "numeric": 0,
         "semantic_payload": 0,
+        "eos_termination": 0,
     }
     for d in comp_details_trunc:
         category_counts[d["category"]] = category_counts.get(d["category"], 0) + 1
@@ -471,6 +483,13 @@ def build_calibration_dataset(
             boundary_weight=boundary_weight,
             content_weight=content_weight,
         )
+
+        # Append EOS termination token with boundary weight so Fisher profiling
+        # preserves end-of-sequence stopping after the closing JSON brace.
+        eos_id = getattr(tokenizer, "eos_token_id", None)
+        if eos_id is not None:
+            completion_ids = list(completion_ids) + [int(eos_id)]
+            op_weights = list(op_weights) + [float(boundary_weight)]
 
         # Full sequence
         input_ids = prompt_ids + completion_ids

@@ -257,6 +257,7 @@ class ExperimentManager:
                 calibration_hash=manifest.calibration.dataset_hash,
                 boundary_weight=config.boundary_token_weight,
                 content_weight=config.content_token_weight,
+                include_eos=True,
             )
             cached_profile_path = self.profile_cache_dir / f"{cache_key}.pt"
             logger.stage_started(current_stage, {"cache_key": cache_key, "force_reprofile": force_reprofile})
